@@ -1,24 +1,31 @@
 package domain;
 
-public class Money {
+public abstract class Money {
 
-	private int amount;
-	
-	public Money(int amount) {
-		this.amount = amount;
-	}
+    private int amount;
 
-	public Money times(int multiplier) {
-		return new Money(amount * multiplier);
-	}
-	
-	public boolean equals(Object other){
+    public int getAmount() {
+        return amount;
+    }
+    
+    public Money(int amount) {
+        this.amount = amount;
+    }
 
-
+    public static Dollar dollar(int amount){
+        return new Dollar(amount);
+    }
+    
+    public static Franc franc(int amount){
+        return new Franc(amount);
+    }
+   
+    public abstract Money times(int multiplier);
+    
+    public boolean equals(Object other) {
         Money money = (Money) other;
-		return money.amount==this.amount && other.getClass().equals(this.getClass());
-
-
-	}
+        return money.amount == this.amount 
+        		&& other.getClass().equals(this.getClass());
+    }
 
 }
