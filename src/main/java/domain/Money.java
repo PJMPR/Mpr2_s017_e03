@@ -2,19 +2,25 @@ package domain;
 
 public class Money {
 
-	private int amount;
-	
-	public Money(int amount) {
-		this.amount = amount;
-	}
+    private int amount;
 
-	public Money times(int multiplier) {
-		return new Money(amount * multiplier);
-	}
-	
-	public boolean equals(Object other){
-		Money money = (Money) other;
-		return money.amount==this.amount;
-	}
-	
+    public int getAmount() {
+        return amount;
+    }
+
+    
+    public Money(int amount) {
+        this.amount = amount;
+    }
+
+    
+
+    public boolean equals(Object other) {
+        
+        if(!other.getClass().equals(this.getClass())) return false;
+
+        Money money = (Money) other;
+        return money.amount == this.amount;
+    }
+
 }
