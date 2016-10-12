@@ -13,8 +13,12 @@ public class Money {
 	}
 	
 	public boolean equals(Object other){
-		Money money = (Money) other;
-		return money.amount==this.amount;
+
+
+        Money money = (Money) other;
+		return money.amount==this.amount && other.getClass().equals(this.getClass());
+
+
 	}
-	
+
 }
