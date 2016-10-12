@@ -4,6 +4,8 @@ package domain;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import domain.Money.Currency;
+
 
 public class MoneyTest {
 
