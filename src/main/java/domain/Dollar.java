@@ -7,6 +7,7 @@ public class Dollar {
 
     public Dollar(int amount) {
         this.initialAmount = amount;
+        this.amount=initialAmount;
     }
 
     @Override
