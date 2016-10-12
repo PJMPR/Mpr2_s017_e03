@@ -1,37 +1,45 @@
 package domain;
 
-import com.amazonaws.services.cloudfront.model.UpdateStreamingDistributionRequest;
 
-public abstract class Money {
+public  class Money {
 
     private int amount;
+	protected Currency currency;
 
     public int getAmount() {
         return amount;
     }
     
-    public Money(int amount) {
+    public Money(int amount, Currency currency) {
         this.amount = amount;
+        this.currency=currency;
     }
 
-    public static Dollar dollar(int amount){
-        return new Dollar(amount);
+    public static Money dollar(int amount){
+        return new Money(amount, Currency.USD);
     }
     
-    public static Franc franc(int amount){
-        return new Franc(amount);
+    public static Money franc(int amount){
+        return new Money(amount, Currency.CHF);
     }
    
-    public abstract Money times(int multiplier);
+    public Money times(int multiplier){
+    	return new Money(this.amount*multiplier,this.currency);
+    };
     
     public boolean equals(Object other) {
         Money money = (Money) other;
         return money.amount == this.amount 
-        		&& other.getClass().equals(this.getClass());
+        		&& money.currency.equals(this.currency);
     }
 
+	public Currency currency(){
+		return this.currency;
+	};
 
 
+
+	
 
 
 }
