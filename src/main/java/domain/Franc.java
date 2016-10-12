@@ -1,14 +1,11 @@
 package domain;
 
-public class Franc {
+public class Franc extends Waluta {
 
-	public Franc(int i) {
-		// TODO Auto-generated constructor stub
+	public Franc(int amount) {
+		super(amount);
+
 	}
 
-	public Object times(int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
