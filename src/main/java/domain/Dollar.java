@@ -2,15 +2,16 @@ package domain;
 
 public class Dollar {
 
-	public int amount;
+	private int initialAmount;
+        public int amount;
 
 	public Dollar(int amount) {
-		this.amount = amount;
+		this.initialAmount = amount;
 	}
 
-	public void times(int multiplier) {
-		amount = amount * multiplier;
-		
+	public Dollar times(int multiplier) {
+		amount = initialAmount * multiplier;
+		return this;
 	}
 
 }
