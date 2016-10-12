@@ -5,11 +5,6 @@ public class Dollar {
     private int initialAmount;
     public int amount;
 
-    public int Dollar(int amount) {
-        this.initialAmount = amount;
-        return this.initialAmount;
-    }
-
     public Dollar(int amount) {
         this.initialAmount = amount;
     }
