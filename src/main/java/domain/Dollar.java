@@ -14,9 +14,16 @@ public class Dollar {
 		this.initialAmount = amount;
 	}
 
+    @Override
+    public boolean equals(Object obj) {
+        return this.amount==((Dollar)obj).amount;
+    }
+        
+        
+        
+
 	public Dollar times(int multiplier) {
 		amount = initialAmount * multiplier;
 		return this;
 	}
-
 }
