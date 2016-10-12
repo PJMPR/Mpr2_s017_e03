@@ -16,11 +16,9 @@ public class Money {
     
 
     public boolean equals(Object other) {
-        
-        if(!other.getClass().equals(this.getClass())) return false;
-
         Money money = (Money) other;
-        return money.amount == this.amount;
+        return money.amount == this.amount 
+        		&& other.getClass().equals(this.getClass());
     }
 
 }
