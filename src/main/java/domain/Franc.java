@@ -9,5 +9,9 @@ public class Franc extends Money {
     public Franc times(int multiplier) {
         return new Franc(this.getAmount() * multiplier);
     }
+    
+    {
+        System.out.println( "test" );
+    }
 
 }
