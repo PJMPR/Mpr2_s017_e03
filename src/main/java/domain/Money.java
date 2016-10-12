@@ -20,5 +20,9 @@ public class Money {
         return money.amount == this.amount 
         		&& other.getClass().equals(this.getClass());
     }
+    
+    {
+        System.out.println( "test" );
+    }
 
 }
