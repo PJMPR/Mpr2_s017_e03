@@ -1,5 +1,7 @@
 package domain;
 
+import com.amazonaws.services.cloudfront.model.UpdateStreamingDistributionRequest;
+
 public abstract class Money {
 
     private int amount;
@@ -27,5 +29,9 @@ public abstract class Money {
         return money.amount == this.amount 
         		&& other.getClass().equals(this.getClass());
     }
+
+
+
+
 
 }
