@@ -1,23 +1,30 @@
 package domain;
 
+
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class MoneyTest extends TestCase {
+public class MoneyTest {
 
 	
 	@Test
 	public void testMultiplication(){
 		Dollar five = new Dollar(5);
-		Dollar product = five.times(2);
-		assertEquals(10, product.amount);
-		product = five.times(3);
-		assertEquals(15, product.amount);
+		assertEquals(new Dollar(10), five.times(2));
+		assertEquals(new Dollar(15), five.times(3));
+	} 
+	
+	@Test
+	public void testfrancMultiplication(){
+		Franc five = new Franc(5);
+		assertEquals(new Franc(10), five.times(2));
+		assertEquals(new Franc(15), five.times(3));
 	} 
 
 	@Test
 	public void testEquality(){
 		assertEquals(new Dollar(5), new Dollar(5));
+		assertNotEquals(new Dollar(5), new Dollar(6));
 	}
 }
