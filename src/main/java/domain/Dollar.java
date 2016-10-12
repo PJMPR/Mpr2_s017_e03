@@ -2,7 +2,7 @@ package domain;
 
 public class Dollar {
 
-	public int initialAmount;
+	private int initialAmount;
         public int amount;
 
 	public Dollar(int amount) {
