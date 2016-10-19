@@ -14,7 +14,13 @@ public class Sum implements Expression{
         this.augend=augend;
         this.addend=addend;
     }
-    
-    
-    
+
+
+    public Money operation() {
+
+            int amount = augend.amount + addend.amount;
+            return new Money(amount, Currency.USD);
+        }
+
+
 }

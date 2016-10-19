@@ -40,4 +40,9 @@ public  class Money implements Expression {
 	public Sum plus(Money five) {
 		return new Sum(this, five);
 	};
+
+
+    public Money operation() {
+        return Money.dollar(getAmount());
+    }
 }
