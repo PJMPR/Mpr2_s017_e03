@@ -35,4 +35,11 @@ public class MoneyTest {
 		assertEquals(Currency.USD, Money.dollar(1).currency());
 		assertEquals(Currency.CHF, Money.franc(1).currency());
 	}
+	
+	@Test
+	public void testSimpleAddition(){
+		Money five = Money.dollar(5);
+		Money sum = five.plus(five);
+		assertEquals(Money.dollar(10), sum);
+	}
 }
