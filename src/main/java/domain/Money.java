@@ -35,11 +35,10 @@ public  class Money {
 
 	public Currency currency(){
 		return this.currency;
+	}
+
+	public Money plus(Money five) {
+		return new Money(amount + five.amount, currency);
 	};
-
-
-
-	
-
 
 }
