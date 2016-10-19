@@ -37,8 +37,7 @@ public  class Money implements Expression {
 		return this.currency;
 	}
 
-	public Money plus(Money five) {
-		return new Money(amount + five.amount, currency);
+	public Sum plus(Money five) {
+		return new Sum(this, five);
 	};
-
 }
