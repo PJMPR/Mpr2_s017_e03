@@ -3,7 +3,7 @@ package domain;
 
 public  class Money implements Expression {
 
-    private int amount;
+    int amount;
 	protected Currency currency;
 
     public int getAmount() {
@@ -12,7 +12,7 @@ public  class Money implements Expression {
     
     public Money(int amount, Currency currency) {
         this.amount = amount;
-        this.currency=currency;
+        this.currency = currency;
     }
 
     public static Money dollar(int amount){
@@ -38,7 +38,6 @@ public  class Money implements Expression {
 	}
 
 	public Sum plus(Money five) {
-		return new Sum(this,five);
+		return new Sum(this, five);
 	};
-
 }

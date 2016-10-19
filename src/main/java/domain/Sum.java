@@ -1,16 +1,20 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package domain;
 
-/**
- * Created by L on 19.10.2016.
- */
-public class Sum implements Expression {
-
+public class Sum implements Expression{
 
     public final Money augend;
     public final Money addend;
-
-    public Sum(Money augend, Money addend) {
-        this.augend = augend;
-        this.addend = addend;
+    
+    public Sum(Money augend,Money addend) {
+        this.augend=augend;
+        this.addend=addend;
     }
+    
+    
+    
 }
