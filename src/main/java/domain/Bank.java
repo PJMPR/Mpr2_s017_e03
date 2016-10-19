@@ -2,7 +2,7 @@ package domain;
 
 public class Bank {
 
-    public Money reduce(Expression sum, String string) {
+    public Money reduce(Expression sum, Currency currency) {
         return sum.executeExpression();
     }
 
