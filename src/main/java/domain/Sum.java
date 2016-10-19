@@ -5,19 +5,14 @@
  */
 package domain;
 
-/**
- *
- * @author mati
- */
 public class Sum implements Expression{
 
     public final Money augend;
     public final Money addend;
     
-    
-    public Sum(Money add1,Money add2) {
-        this.augend=add1;
-        this.addend=add2;
+    public Sum(Money augend,Money addend) {
+        this.augend=augend;
+        this.addend=addend;
     }
     
     
