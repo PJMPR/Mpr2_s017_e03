@@ -70,6 +70,13 @@ public class MoneyTest {
 		assertEquals(five, result);
 	}
 	
+	@Test
+	public void testReduceMoneyDefferentCurrency(){
+		Bank bank = new Bank();
+		bank.addRate(Currency.CHF,Currency.USD,2);
+		Money result = bank.reduce(Money.franc(2), Currency.USD);
+		assertEquals(result, Money.dollar(1));
+	}
 }
 
 
