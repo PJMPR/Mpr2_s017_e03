@@ -15,15 +15,15 @@ public class Sum implements Expression {
         this.addend = addend;
     }
 
-    public Money reduce(Currency currency) {
+    public Money reduce( Currency currency) {
 
-      if(addend.currency() == Currency.CHF){
-          int amount1 = (addend.amount / 2)+ augend.amount;
-          return new Money(amount1, currency);
+      if(addend.currency() != augend.currency()){
+          Bank bank = new Bank();
+          return new Money(bank.reduce(addend,augend.currency).getAmount(),currency);
       }
           int amount = augend.amount + addend.amount;
-
         return new Money(amount, currency);
     }
+
 
 }

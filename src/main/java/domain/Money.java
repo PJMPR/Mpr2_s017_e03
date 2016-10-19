@@ -6,6 +6,8 @@ public  class Money implements Expression {
     int amount;
 	protected Currency currency;
 
+
+
     public int getAmount() {
         return amount;
     }

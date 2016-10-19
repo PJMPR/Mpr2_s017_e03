@@ -21,6 +21,8 @@ public class Bank {
         }
     }
 
+
+
     public Money reduce(Expression expression, Currency currency) {
         if (rateMap.containsKey(expression.reduce(currency).currency)
                 && rateMap.get(expression.reduce(currency).currency).containsKey(currency)) {
@@ -33,4 +35,7 @@ public class Bank {
         }
     }
 
+    public HashMap<Currency, HashMap<Currency, Integer>> getRateMap() {
+        return rateMap;
+    }
 }
