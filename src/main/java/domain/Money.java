@@ -1,7 +1,7 @@
 package domain;
 
 
-public  class Money {
+public  class Money implements Expression {
 
     private int amount;
 	protected Currency currency;
