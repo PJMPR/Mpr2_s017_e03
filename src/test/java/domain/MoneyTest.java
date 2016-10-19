@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import sun.text.normalizer.CharTrie.FriendAgent;
+
 public class MoneyTest {
 
 	@Test
@@ -77,6 +79,42 @@ public class MoneyTest {
 		Money result = bank.reduce(Money.franc(2), Currency.USD);
 		assertEquals(result, Money.dollar(1));
 	}
+	//1
+	@Test
+	public void testMixedAddition(){
+		Money fiveBucks = Money.dollar(5);
+		Money tenFrancs = Money.franc(10);
+		Bank bank = new Bank();
+		bank.addRate(Currency.CHF,Currency.USD,2);
+		Money result = bank.reduce(fiveBucks.plus(tenFrancs), Currency.USD);
+		assertEquals(Money.dollar(10), result);
+	}
+	
+	//2
+	/*@Test
+	public void testSumPlusMoney(){
+		Expression fiveBucks = Money.dollar(5);
+		Expression tenFrancs = Money.franc(10);
+		Bank bank = new Bank();
+		bank.addRate(Currency.CHF,Currency.USD,2);
+		Expression sum = new Sum(fiveBucks, tenFrancs).plus(fiveBucks);
+		MoneyTest result = bank.reduce(sum, Currency.USD);
+		assertEquals(Money.dollar(15), result);
+	}*/
+	
+	//3
+	/*@Test
+	public void testSumTimes(){
+		Expression fiveBucks = Money.dollar(5);
+		Expression tenFrancs = Money.franc(10);
+		Bank bank = new Bank();
+		bank.addRate(Currency.CHF,Currency.USD,2);
+		Expression sum = new Sum(fiveBucks, tenFrancs).times(2);
+		MoneyTest result = bank.reduce(sum, Currency.USD);
+		assertEquals(Money.dollar(20), result);
+		
+	}*/
+	
 }
 
 
