@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Bank {
 
-    HashMap<Currency, HashMap<Currency, Integer>> rateMap;
+    private HashMap<Currency, HashMap<Currency, Integer>> rateMap;
 
     public Bank() {
         this.rateMap = new HashMap<Currency, HashMap<Currency, Integer>>();
@@ -27,7 +27,8 @@ public class Bank {
             return new Money(
                     ((Money) expression).getAmount()
                     / rateMap.get(((Money) expression).currency).get(currency), currency);
-        } else {
+        } 
+            else {
             return expression.reduce(currency);
         }
     }

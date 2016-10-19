@@ -16,7 +16,13 @@ public class Sum implements Expression {
     }
 
     public Money reduce(Currency currency) {
-        int amount = augend.amount + addend.amount;
+
+      if(addend.currency() == Currency.CHF){
+          int amount1 = (addend.amount / 2)+ augend.amount;
+          return new Money(amount1, currency);
+      }
+          int amount = augend.amount + addend.amount;
+
         return new Money(amount, currency);
     }
 
