@@ -37,8 +37,10 @@ public  class Money {
 		return this.currency;
 	};
 
+    public Money plus(Money money){
+        return new Money(this.amount+money.getAmount(), this.currency);
 
-
+    }
 	
 
 
