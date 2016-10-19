@@ -1,7 +1,7 @@
 package domain;
 
 
-public  class Money {
+public  class Money implements Expression {
 
     private int amount;
 	protected Currency currency;
@@ -35,13 +35,10 @@ public  class Money {
 
 	public Currency currency(){
 		return this.currency;
+	}
+
+	public Sum plus(Money five) {
+		return new Sum(this,five);
 	};
-
-    public Money plus(Money money){
-        return new Money(this.amount+money.getAmount(), this.currency);
-
-    }
-	
-
 
 }
