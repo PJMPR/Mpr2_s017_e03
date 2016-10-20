@@ -12,6 +12,7 @@ public class Sum implements Expression {
     public final Expression augend;
     public final Expression addend;
     public ArrayList<Expression> additions; 
+    private Integer multiplier=1;
     public Sum(Expression augend, Expression addend) {
         this.augend = augend;
         this.addend = addend;
@@ -24,7 +25,7 @@ public class Sum implements Expression {
                 amount=amount+expression.reduce(bank, currency).amount;
             }
         }
-        return new Money(amount, currency);
+        return new Money(amount* this.multiplier, currency);
     }
     
     public Expression plus(Expression expression){
@@ -35,6 +36,11 @@ public class Sum implements Expression {
         //Dodajemy nowy element
         additions.add(expression);
         
+        return this;
+    }
+
+    public Expression times(Integer multiplier) {
+        this.multiplier=multiplier;
         return this;
     }
 

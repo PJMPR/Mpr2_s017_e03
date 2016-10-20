@@ -21,12 +21,6 @@ public class Money implements Expression{
     public static Money franc(int amount) {
         return new Money(amount, Currency.CHF);
     }
-
-    public Money times(int multiplier) {
-        return new Money(this.amount * multiplier, this.currency);
-    }
-
-    ;
     
     public boolean equals(Object other) {
         Money money = (Money) other;
@@ -44,6 +38,10 @@ public class Money implements Expression{
 
     public Money reduce(Bank bank, Currency currency) {
         return this;
+    }
+
+    public Expression times(Integer multiplier) {
+        return new Money(getAmount()*multiplier,currency());
     }
 
     
