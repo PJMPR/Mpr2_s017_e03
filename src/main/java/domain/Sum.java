@@ -5,19 +5,37 @@
  */
 package domain;
 
+import java.util.ArrayList;
+
 public class Sum implements Expression {
 
-    public final Money augend;
-    public final Money addend;
-
-    public Sum(Money augend, Money addend) {
+    public final Expression augend;
+    public final Expression addend;
+    public ArrayList<Expression> additions; 
+    public Sum(Expression augend, Expression addend) {
         this.augend = augend;
         this.addend = addend;
     }
 
-    public Money reduce(Currency currency) {
-        int amount = augend.amount + addend.amount;
+    public Money reduce(Bank bank,Currency currency) {
+        int amount = bank.reduce(augend, currency).amount + bank.reduce(addend, currency).amount;
+        if(additions!=null){
+            for (Expression expression:additions){
+                amount=amount+expression.reduce(bank, currency).amount;
+            }
+        }
         return new Money(amount, currency);
+    }
+    
+    public Expression plus(Expression expression){
+        //Inicializujemy tablicę kolejnych
+        if(additions==null){
+            additions=new ArrayList<Expression>();
+        }
+        //Dodajemy nowy element
+        additions.add(expression);
+        
+        return this;
     }
 
 }
