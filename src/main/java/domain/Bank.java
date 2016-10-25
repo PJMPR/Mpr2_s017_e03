@@ -22,20 +22,15 @@ public class Bank {
     }
 
 
-
     public Money reduce(Expression expression, Currency currency) {
-        if (rateMap.containsKey(expression.reduce(currency).currency)
-                && rateMap.get(expression.reduce(currency).currency).containsKey(currency)) {
+        if (rateMap.containsKey(expression.reduce(this, currency).currency)
+                && rateMap.get(expression.reduce(this, currency).currency).containsKey(currency)) {
             return new Money(
                     ((Money) expression).getAmount()
-                    / rateMap.get(((Money) expression).currency).get(currency), currency);
-        } 
-            else {
-            return expression.reduce(currency);
+                            / rateMap.get(((Money) expression).currency).get(currency), currency);
+        } else {
+            return expression.reduce(this, currency);
         }
     }
 
-    public HashMap<Currency, HashMap<Currency, Integer>> getRateMap() {
-        return rateMap;
-    }
 }

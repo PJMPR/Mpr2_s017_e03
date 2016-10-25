@@ -5,25 +5,35 @@
  */
 package domain;
 
-public class Sum implements Expression {
+public class Sum extends Money implements Expression {
 
     public final Money augend;
     public final Money addend;
 
-    public Sum(Money augend, Money addend) {
-        this.augend = augend;
-        this.addend = addend;
-    }
+    public Sum(Expression augend, Expression addend) {
 
-    public Money reduce( Currency currency) {
+        this.augend = augend.reduce(currency);
+        this.addend = addend.reduce(currency);
 
-      if(addend.currency() != augend.currency()){
-          Bank bank = new Bank();
-          return new Money(bank.reduce(addend,augend.currency).getAmount(),currency);
-      }
-          int amount = augend.amount + addend.amount;
-        return new Money(amount, currency);
+
     }
 
 
+    public Money reduce(Currency currency) {
+
+
+        if (addend.currency() != augend.currency()) {
+            Bank bank = new Bank();
+            return new Money(bank.reduce(addend, augend.currency).getAmount(), currency);
+        }
+
+        int amount = augend.amount + addend.amount;
+        return Money.dollar(amount);
+    }
+
+    public Money reduce(Bank bank, Currency currency) {
+
+        int amount = augend.amount + addend.amount;
+        return Money.dollar(amount);
+    }
 }
