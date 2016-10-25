@@ -29,10 +29,9 @@ public class Money implements Expression {
     }
 
     public Money times(int multiplier) {
-        return new Money(this.amount * multiplier, this.currency);
+        return new Money(amount * multiplier, currency);
     }
 
-    ;
 
     public boolean equals(Object other) {
         Money money = (Money) other;
@@ -45,8 +44,6 @@ public class Money implements Expression {
     }
 
     public Sum plus(Expression five) {
-
-
         return new Sum(this, five);
     }
 

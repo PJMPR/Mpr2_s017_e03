@@ -104,17 +104,17 @@ public class MoneyTest {
 
 
 	//3
-	/*@Test
+	@Test
 	public void testSumTimes(){
 		Expression fiveBucks = Money.dollar(5);
 		Expression tenFrancs = Money.franc(10);
 		Bank bank = new Bank();
 		bank.addRate(Currency.CHF,Currency.USD,2);
 		Expression sum = new Sum(fiveBucks, tenFrancs).times(2);
-		MoneyTest result = bank.reduce(sum, Currency.USD);
+		Money result = bank.reduce(sum, Currency.USD);
 		assertEquals(Money.dollar(20), result);
 		
-	}*/
+	}
 
 }
 
