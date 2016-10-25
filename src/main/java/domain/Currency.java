@@ -2,5 +2,5 @@ package domain;
 
 public enum Currency {
 
-    USD, CHF;
+    USD, CHF
 }

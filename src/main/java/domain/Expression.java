@@ -1,5 +1,8 @@
 package domain;
 
 public interface Expression {
-	Money reduce(Currency currency);
+
+    Money reduce(Bank bank, Currency currency);
+
+    Money reduce(Currency currency);
 }
