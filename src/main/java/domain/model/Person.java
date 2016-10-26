@@ -1,17 +1,29 @@
 package domain.model;
 
-/**
- * Created by L on 26.10.2016.
- */
 public class Person {
 
-    private int id;
-    private String firstName;
-    private String lastName;
-
-    public Person(int id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+	private int id;
+	private String name;
+	private String surname;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	
+	
+	
 }
