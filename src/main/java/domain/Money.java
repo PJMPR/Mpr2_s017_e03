@@ -49,12 +49,12 @@ public class Money implements Expression {
         return new Sum(this, five);
     }
 
-    public Money reduce(Currency currency) {
-        return this;
-    }
 
     public Money reduce(Bank bank, Currency currency) {
         return this;
     }
 
+    public Money reduce(Currency currency) {
+        return this;
+    }
 }

@@ -2,7 +2,6 @@ package domain.model;
 
 import java.math.BigDecimal;
 
-import domain.Currency;
 
 public class Wallet {
 
