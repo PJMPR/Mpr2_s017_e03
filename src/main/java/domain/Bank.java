@@ -1,5 +1,7 @@
 package domain;
 
+import domain.model.Currency;
+
 import java.util.HashMap;
 
 public class Bank {

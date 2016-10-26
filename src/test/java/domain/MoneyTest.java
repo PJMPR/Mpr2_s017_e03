@@ -1,6 +1,7 @@
 package domain;
 
 
+import domain.model.Currency;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

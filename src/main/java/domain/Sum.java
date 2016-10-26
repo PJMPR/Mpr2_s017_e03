@@ -5,6 +5,8 @@
  */
 package domain;
 
+import domain.model.Currency;
+
 public class Sum extends Money implements Expression {
 
     public final Money augend;

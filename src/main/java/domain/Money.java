@@ -1,6 +1,8 @@
 package domain;
 
 
+import domain.model.Currency;
+
 public class Money implements Expression {
 
     int amount;
