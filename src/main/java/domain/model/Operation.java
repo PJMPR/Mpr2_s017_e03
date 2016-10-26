@@ -1,4 +1,4 @@
-package s14094;
+package domain.model;
 
 public enum Operation {
 	
