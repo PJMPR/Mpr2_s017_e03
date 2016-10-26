@@ -62,27 +62,27 @@ public class Bank {
      * @param currency waluta na którą ma być przeliczone
      * @return
      */
-    public Money reduce(Money money, Currency currency) {
-        //Sprawdzamy czy jest przelicznik dla danej waluty
-        if(rateMap.containsKey(money.currency)){
-            //Sprawdzamy czy jest przeliczenie na daną walutę
-            if(rateMap.get(money.currency).containsKey(currency)){
-                //Pobieramy przelicznik
-                Integer reducer=rateMap.get(money.currency).get(currency);
-                //Zwracamy przeliczony banknot z nową walutą
-                return new Money(money.amount/reducer, currency);
-            }
-            else{
-                //Brak przelicznika więc zwracamy siebie 
-                //TODO jakis exception?
-                return money;
-            }
-        }else
-        {
-            //Brak przelicznika dla danej waluty więc zwracamy siebie
-            //TODO jakiś exception
-            return money;
-        }
-    }
+//    public Money reduce(Money money, Currency currency) {
+//        //Sprawdzamy czy jest przelicznik dla danej waluty
+//        if(rateMap.containsKey(money.currency)){
+//            //Sprawdzamy czy jest przeliczenie na daną walutę
+//            if(rateMap.get(money.currency).containsKey(currency)){
+//                //Pobieramy przelicznik
+//                Integer reducer=rateMap.get(money.currency).get(currency);
+//                //Zwracamy przeliczony banknot z nową walutą
+//                return new Money(money.amount/reducer, currency);
+//            }
+//            else{
+//                //Brak przelicznika więc zwracamy siebie 
+//                //TODO jakis exception?
+//                return money;
+//            }
+//        }else
+//        {
+//            //Brak przelicznika dla danej waluty więc zwracamy siebie
+//            //TODO jakiś exception
+//            return money;
+//        }
+//    }
 
 }
