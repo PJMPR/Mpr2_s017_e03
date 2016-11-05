@@ -2,40 +2,57 @@ package domain;
 
 import domain.model.Currency;
 
-import java.util.HashMap;
+import java.util.Hashtable;
 
 public class Bank {
 
-    private HashMap<Currency, HashMap<Currency, Integer>> rateMap;
 
-    public Bank() {
-        this.rateMap = new HashMap<Currency, HashMap<Currency, Integer>>();
-    }
-
-    public Boolean addRate(Currency baseCurrency, Currency toCurrency, Integer value) {
-        if (rateMap.get(baseCurrency) != null) {
-            rateMap.get(baseCurrency).put(toCurrency, value);
-            return true;
-        } else {
-            rateMap.put(baseCurrency, new HashMap<Currency, Integer>());
-            rateMap.get(baseCurrency).put(toCurrency, value);
-            return true;
-        }
-    }
-
+    private Hashtable<Pair, Integer> rates = new Hashtable<Pair, Integer>();
 
     public Money reduce(Expression expression, Currency currency) {
-        if (rateMap.containsKey(expression.reduce(this, currency).currency)
-                && rateMap.get(expression.reduce(this, currency).currency).containsKey(currency)) {
-            return new Money(
-                    ((Money) expression).getAmount()
-                            / rateMap.get(((Money) expression).currency).get(currency), currency);
-        } else {
-            return expression.reduce(this, currency);
-        }
+
+        return expression.reduce(this, currency);
+
+    }
+
+    public void addRate(Currency currencyFrom, Currency currencyTo, int rate) {
+        rates.put(new Pair(currencyFrom, currencyTo), rate);
+    }
+
+    public int rate(Currency currency, Currency to) {
+        if (currency == to)
+            return 1;
+        return rates.get(new Pair(currency, to));
     }
 
 
+}
+
+class Pair {
+
+    private Currency currencyFrom;
+    private Currency currencyTo;
+
+    Pair(Currency currencyFrom, Currency currencyTo) {
+        this.currencyFrom = currencyFrom;
+        this.currencyTo = currencyTo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pair pair = (Pair) o;
+
+        return currencyFrom == pair.currencyFrom && currencyTo == pair.currencyTo;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }
 
 

@@ -2,45 +2,33 @@ package domain;
 
 import domain.model.Currency;
 
-public class Sum extends Money implements Expression {
+public class Sum implements Expression {
 
-    public final Money augend;
-    public final Money addend;
+
+    public Expression augend;
+    public Expression addend;
 
     public Sum(Expression augend, Expression addend) {
-
-        this.augend = augend.reduce(currency);
-        this.addend = addend.reduce(currency);
-    }
-
-
-    public Money reduce(Currency currency) {
-
-
-        if (addend.currency() != augend.currency()) {
-            Bank bank = new Bank();
-            return new Money(bank.reduce(addend, augend.currency).getAmount(), currency);
-        }
-        int amount = augend.amount + addend.amount;
-        return Money.dollar(amount);
+        this.augend = augend;
+        this.addend = addend;
     }
 
     public Money reduce(Bank bank, Currency currency) {
-        if (addend.currency() != augend.currency()) {
-            Money money = new Money(bank.reduce(addend, augend.currency).getAmount(), currency);
-            return Money.dollar(money.amount + augend.amount);
-        }
-        int amount = augend.amount + addend.amount;
-        return Money.dollar(amount);
+        return new Money(
+                addend.reduce(bank, currency).amount
+                        + augend.reduce(bank, currency).amount
+                , currency);
     }
 
-    public Money times(int multiplier) {
-
-        if (augend.currency() != addend.currency()) {
-            Bank bank = new Bank();
-            Money money = new Money(bank.reduce(addend, augend.currency).getAmount(), currency);
-            return Money.dollar(money.amount * multiplier);
-        }
-        return null;
+    public Sum plus(Expression money) {
+        return new Sum(this, money);
     }
+
+    public Expression times(int multiplier) {
+        return new Sum(
+                this.augend.times(multiplier),
+                this.addend.times(multiplier)
+        );
+    }
+
 }
