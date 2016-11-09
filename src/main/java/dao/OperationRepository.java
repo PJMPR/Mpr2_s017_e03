@@ -22,7 +22,7 @@ public class OperationRepository extends RepositoryBase{
 	}
 	@Override
 	protected String tableName() {
-		return "Operation";
+		return "Operations";
 
 	}
 }

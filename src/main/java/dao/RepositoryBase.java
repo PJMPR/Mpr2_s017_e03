@@ -16,7 +16,7 @@ public abstract class RepositoryBase {
 	
 	protected RepositoryBase(Connection connection){
 		this.connection = connection;
-		createTableIfnotExists(connection);
+		createTableIfnotExists();
 	}
 
 	
@@ -25,9 +25,9 @@ public abstract class RepositoryBase {
 	
 	
 
-	private void createTableIfnotExists(Connection connection) {
+	private void createTableIfnotExists() {
 		try {
-			Statement createTable = connection.createStatement();
+			Statement createTable = this.connection.createStatement();
 
 			boolean tableExists = false;
 
