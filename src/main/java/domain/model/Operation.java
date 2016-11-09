@@ -1,6 +1,6 @@
 package domain.model;
 
 public enum Operation {
-	
-	income, outcome, transfer;
+
+    income, outcome, transfer
 }

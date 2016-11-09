@@ -1,18 +1,34 @@
 package domain;
 
+import domain.model.Currency;
+
 public class Sum implements Expression {
 
-    public final Money augend;
-    public final Money addend;
 
-    public Sum(Money augend, Money addend) {
+    public Expression augend;
+    public Expression addend;
+
+    public Sum(Expression augend, Expression addend) {
         this.augend = augend;
         this.addend = addend;
     }
 
-    public Money reduce(Currency currency) {
-        int amount = augend.amount + addend.amount;
-        return new Money(amount, currency);
+    public Money reduce(Bank bank, Currency currency) {
+        return new Money(
+                addend.reduce(bank, currency).amount
+                        + augend.reduce(bank, currency).amount
+                , currency);
+    }
+
+    public Sum plus(Expression money) {
+        return new Sum(this, money);
+    }
+
+    public Expression times(int multiplier) {
+        return new Sum(
+                this.augend.times(multiplier),
+                this.addend.times(multiplier)
+        );
     }
 
 }
