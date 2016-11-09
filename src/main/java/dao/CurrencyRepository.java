@@ -1,15 +1,27 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.swing.text.html.HTMLEditorKit.Parser;
+
+import domain.model.Currency;
+import domain.model.Person;
 
 /**
  * Created by L on 27.10.2016.
  */
 public class CurrencyRepository extends RepositoryBase{
 
+	String insertSql = "INSERT INTO currency(name) VALUES (?)";
+	String selectByIdSql = "SELECT * FROM people WHERE id=?";
+	
+	PreparedStatement insert;
+	PreparedStatement selectById;
+	
 	public CurrencyRepository(Connection connection) {
 		super(connection);
 	}
@@ -23,8 +35,33 @@ public class CurrencyRepository extends RepositoryBase{
 	@Override
 	protected String tableName() {
 		return "Currency";
-
 	}
+
+	public Currency get(int currencyId){
+		try{
+			selectById.setInt(1, currencyId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				return domain.model.Currency.getByName(rs.getString("name"));
+			}
+			return null;
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+			return null;
+		}
+	}
+	
+	public void add(Currency cur) {
+		try {
+			insert.setString(1, cur.name());
+			insert.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	
+	
 
 	
 }
