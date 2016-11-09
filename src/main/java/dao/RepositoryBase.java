@@ -9,22 +9,18 @@ public abstract class RepositoryBase {
 
 	private Connection connection;
 
-
-	public Connection getConnection() {
-		return connection;
-	}
-	
 	protected RepositoryBase(Connection connection){
 		this.connection = connection;
 		createTableIfnotExists(connection);
 	}
-
 	
+	public Connection getConnection() {
+		return connection;
+	}
+
 	protected abstract String createTableSql();
 	protected abstract String tableName();
 	
-	
-
 	private void createTableIfnotExists(Connection connection) {
 		try {
 			Statement createTable = connection.createStatement();
