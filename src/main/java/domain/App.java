@@ -15,7 +15,7 @@ public class App {
             PersonRepository personRepository = new PersonRepository(connection);
             //CurrencyRepository currencyRepository = new CurrencyRepository(connection);
             //OperationRepository operationRepository = new OperationRepository(connection);
-            //WalletRepository walletRepository = new WalletRepository(connection);
+            WalletRepository walletRepository = new WalletRepository(connection);
             //HistoryRepository historyRepository = new HistoryRepository(connection);
             
             System.out.print("End");
