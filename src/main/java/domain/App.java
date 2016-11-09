@@ -26,11 +26,18 @@ public class App {
             personRepository.add(Jan);
             Person janFromDb = personRepository.get(0);
             System.out.println(janFromDb.getName() + " " + janFromDb.getSurname());
-            System.out.print("End");
 
 
             operationRepository.add(Operation.income);
+            operationRepository.add(Operation.income);
+            operationRepository.add(Operation.outcome);
+            operationRepository.add(Operation.income);
+
             System.out.println(operationRepository.get(0));
+
+            operationRepository.delete(40);
+            operationRepository.getAll();
+            operationRepository.setUpdate(1, Operation.outcome);
 
         } catch (SQLException e) {
             e.printStackTrace();
