@@ -52,5 +52,5 @@ public class WalletRepository {
 
     public Connection getConnection() {
         return connection;
-    }
+     }
 }
