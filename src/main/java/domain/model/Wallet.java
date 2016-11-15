@@ -2,7 +2,6 @@ package domain.model;
 
 import java.math.BigDecimal;
 
-
 public class Wallet {
 
     private int id;
@@ -50,6 +49,4 @@ public class Wallet {
     public void setPerson(Person person) {
         this.person = person;
     }
-
-
 }

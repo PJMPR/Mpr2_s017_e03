@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import domain.model.Person;
 
@@ -12,15 +14,24 @@ public class PersonRepository extends RepositoryBase {
 
 	String insertSql = "INSERT INTO people(name, surname) VALUES (?,?)";
 	String selectByIdSql = "SELECT * FROM people WHERE id=?";
+	String updateByIdSql = "UPDATE people SET NAME=? WHERE id=?";
+	String deleteByIdSql = "DELETE FROM people where id=?";
+	String getAllSql = "SELECT * FROM people";
 	
 	PreparedStatement insert;
 	PreparedStatement selectById;
+	PreparedStatement updateById;
+	PreparedStatement deleteById;
+	static PreparedStatement getAll; 
 	
 	public PersonRepository(Connection connection) {
 		super(connection);
 		try {
 			insert = connection.prepareStatement(insertSql);
 			selectById = connection.prepareStatement(selectByIdSql);
+			updateById = connection.prepareStatement(updateByIdSql);
+			deleteById = connection.prepareStatement(deleteByIdSql);
+			getAll = connection.prepareStatement(getAllSql);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -43,7 +54,6 @@ public class PersonRepository extends RepositoryBase {
 			ex.printStackTrace();
 		}
 		return null;
-		
 	}
 	
 	public void add(Person person) {
@@ -54,6 +64,39 @@ public class PersonRepository extends RepositoryBase {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	public void update(Person person){
+		 try {
+			updateById.setString(1, person.getName());
+		    updateById.setString(2, person.getSurname());
+		} catch (SQLException e) {
+		      e.printStackTrace();
+		}
+}
+	
+	public void delete(Person person){
+		try{
+		    deleteById.setInt(1, person.getId());
+		}catch(Exception e) {
+			  e.printStackTrace();
+		}
+}
+	
+	public static List <Person> getAll(){
+		List <Person> list = new ArrayList<Person>();
+		try{
+			ResultSet rs = getAll.executeQuery();
+			while(rs.next()){
+				Person result = new Person();
+				result.setId(rs.getInt(1));
+				result.setName(rs.getString(2));
+				result.setSurname(rs.getString(3));
+				list.add(result);
+			}
+	}catch(Exception e)
+		{e.printStackTrace();}
+		return list;
 	}
 
 	@Override
@@ -67,5 +110,4 @@ public class PersonRepository extends RepositoryBase {
 	protected String tableName() {
 		return "people";
 	}
-
 }

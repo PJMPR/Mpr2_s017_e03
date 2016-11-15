@@ -1,17 +1,101 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by L on 05.11.2016.
- */
+import javax.persistence.*;
+
+import domain.model.Currency;
+import domain.model.Enums;
+import domain.model.History;
+import domain.model.Operation;
+
 public class OperationRepository extends RepositoryBase{
+	
+	String insertSql = "INSERT INTO operations(name) VALUES (?)";
+	String selectByIdSql = "SELECT * FROM operations WHERE id=?";
+	String updateByIdSql = "UPDATE operations SET NAME=? WHERE id=?";
+	String deleteByIdSql = "DELETE FROM operations where id=?";
+	String getAllSql = "SELECT * FROM operations";
+			
+	PreparedStatement insert;
+	PreparedStatement selectById;
+	PreparedStatement updateById;
+	PreparedStatement deleteById;
+	static PreparedStatement getAll; 
 
 	public OperationRepository(Connection connection) {
 		super(connection);
+		try {
+			insert = connection.prepareStatement(insertSql);
+			selectById = connection.prepareStatement(selectByIdSql);
+			updateById = connection.prepareStatement(updateByIdSql);
+			deleteById = connection.prepareStatement(deleteByIdSql);
+			getAll = connection.prepareStatement(getAllSql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Enums get(int enumsId){
+		try{
+			selectById.setInt(1, enumsId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+            Enums result = new Enums();
+            result.setId(rs.getInt("id"));
+			return result;
+		}
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+			return null;
+		}
+	
+	public void add(Enums enums) {
+		try {
+			insert.setString(1, enums.getEnumerationName());
+			insert.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}	
+	
+	public void update(Enums enums){
+		 try {
+			updateById.setString(1, enums.getEnumerationName());
+		} catch (SQLException e) {
+		      e.printStackTrace();
+		}
+}
+	
+	public void delete(Enums enums){
+		try{
+		    deleteById.setInt(1, enums.getId());
+		}catch(Exception e) {
+			  e.printStackTrace();
+		}
+}
+	
+	public static List <Enums> getAll(){
+		List <Enums> list = new ArrayList<Enums>();
+		try{
+			ResultSet rs = getAll.executeQuery();
+			while(rs.next()){
+				Enums result = new Enums();
+				result.setEnumerationName(rs.getString(1));
+				list.add(result);
+			}
+	}catch(Exception e)
+		{e.printStackTrace();}
+		return list;
 	}
 
 	@Override
@@ -23,6 +107,5 @@ public class OperationRepository extends RepositoryBase{
 	@Override
 	protected String tableName() {
 		return "Operations";
-
 	}
 }

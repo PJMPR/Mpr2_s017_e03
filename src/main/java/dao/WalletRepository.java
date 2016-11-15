@@ -1,17 +1,71 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by L on 05.11.2016.
- */
+import domain.model.Wallet;
+
 public class WalletRepository extends RepositoryBase{
-
+	
+	String insertSql = "INSERT INTO wallet(accountId) VALUES (?)";
+	String selectByIdSql = "SELECT * FROM wallet WHERE id=?";
+	String updateByIdSql = "UPDATE wallet SET ACCOUNTID=? WHERE id=?";
+	String deleteByIdSql = "DELETE FROM wallet where id=?";
+	String getAllSql = "SELECT * FROM wallet";
+		
+	PreparedStatement insert;
+	PreparedStatement selectById;
+	PreparedStatement updateById;
+	PreparedStatement deleteById;
+	static PreparedStatement getAll; 
+	
 	public WalletRepository(Connection connection) {
 		super(connection);
+		try {
+			insert = connection.prepareStatement(insertSql);
+			selectById = connection.prepareStatement(selectByIdSql);
+			updateById = connection.prepareStatement(updateByIdSql);
+			deleteById = connection.prepareStatement(deleteByIdSql);
+			getAll = connection.prepareStatement(getAllSql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(Wallet wallet){
+		 try {
+			updateById.setInt(1, wallet.getAccountID());
+		} catch (SQLException e) {
+		      e.printStackTrace();
+		}
+}
+	
+	public void delete(Wallet wallet){
+		try{
+		    deleteById.setInt(1, wallet.getId());
+		}catch(Exception e) {
+			  e.printStackTrace();
+		}
+}
+	
+	public static List <Wallet> getAll(){
+		List <Wallet> list = new ArrayList<Wallet>();
+		try{
+			ResultSet rs = getAll.executeQuery();
+			while(rs.next()){
+				Wallet result = new Wallet();
+				result.setAccountID(rs.getInt(1));
+				list.add(result);
+			}
+	}catch(Exception e)
+		{e.printStackTrace();}
+		return list;
 	}
 
 	@Override
