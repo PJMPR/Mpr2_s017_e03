@@ -68,6 +68,4 @@ public class History {
     public void setRate(double rate) {
         this.rate = rate;
     }
-
-
 }

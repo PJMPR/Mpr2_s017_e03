@@ -1,17 +1,71 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by L on 05.11.2016.
- */
+import domain.model.History;
+
 public class HistoryRepository extends RepositoryBase{
+	
+	String insertSql = "INSERT INTO history(date) VALUES (?)";
+	String selectByIdSql = "SELECT * FROM history WHERE id=?";
+	String updateByIdSql = "UPDATE history SET DATE=? WHERE id=?";
+	String deleteByIdSql = "DELETE FROM history where id=?";
+	String getAllSql = "SELECT * FROM history";
+			
+	PreparedStatement insert;
+	PreparedStatement selectById;
+	PreparedStatement updateById;
+	PreparedStatement deleteById;
+	static PreparedStatement getAll; 
 
 	public HistoryRepository(Connection connection) {
 		super(connection);
+		try {
+			insert = connection.prepareStatement(insertSql);
+			selectById = connection.prepareStatement(selectByIdSql);
+			updateById = connection.prepareStatement(updateByIdSql);
+			deleteById = connection.prepareStatement(deleteByIdSql);
+			getAll = connection.prepareStatement(getAllSql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(History history){
+		 try {
+			updateById.setDate(1, history.getDate());
+		} catch (SQLException e) {
+		      e.printStackTrace();
+		}
+}
+	
+	public void delete(History history){
+		try{
+		    deleteById.setInt(1, history.getId());
+		}catch(Exception e) {
+			  e.printStackTrace();
+		}
+}
+	
+	public static List <History> getAll(){
+		List <History> list = new ArrayList<History>();
+		try{
+			ResultSet rs = getAll.executeQuery();
+			while(rs.next()){
+				History result = new History();
+				result.setId(rs.getInt(1));
+				list.add(result);
+			}
+	}catch(Exception e)
+		{e.printStackTrace();}
+		return list;
 	}
 
 	@Override

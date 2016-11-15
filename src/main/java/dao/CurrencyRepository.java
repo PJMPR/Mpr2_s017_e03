@@ -5,26 +5,96 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.swing.text.html.HTMLEditorKit.Parser;
+import java.util.ArrayList;
+import java.util.List;
 
 import domain.model.Currency;
+import domain.model.Enums;
 import domain.model.Person;
 
-/**
- * Created by L on 27.10.2016.
- */
 public class CurrencyRepository extends RepositoryBase{
-
-	String insertSql = "INSERT INTO currency(name) VALUES (?)";
-	String selectByIdSql = "SELECT * FROM people WHERE id=?";
 	
+	String insertSql = "INSERT INTO currency(name) VALUES (?)";
+	String selectByIdSql = "SELECT * FROM currency WHERE id=?";
+	String updateByIdSql = "UPDATE currency SET NAME=? WHERE id=?";
+	String deleteByIdSql = "DELETE FROM currency where id=?";
+	String getAllSql = "SELECT * FROM currency";
+			
 	PreparedStatement insert;
 	PreparedStatement selectById;
+	PreparedStatement updateById;
+	PreparedStatement deleteById;
+	static PreparedStatement getAll; 
 	
 	public CurrencyRepository(Connection connection) {
 		super(connection);
+		try {
+			insert = connection.prepareStatement(insertSql);
+			selectById = connection.prepareStatement(selectByIdSql);
+			updateById = connection.prepareStatement(updateByIdSql);
+			deleteById = connection.prepareStatement(deleteByIdSql);
+			getAll = connection.prepareStatement(getAllSql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
+
+	public Enums get(int enumsId){
+		try{
+			selectById.setInt(1, enumsId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+            Enums result = new Enums();
+            result.setId(rs.getInt("id"));
+			return result;
+		}
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+			return null;
+		}
+	
+	public void add(Enums enums) {
+		try {
+			insert.setString(1, enums.getEnumerationName());
+			insert.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}	
+	
+	public void update(Enums enums){
+		 try {
+			updateById.setString(1, enums.getEnumerationName());
+		} catch (SQLException e) {
+		      e.printStackTrace();
+		}
+}
+	
+	public void delete(Enums enums){
+		try{
+		    deleteById.setInt(1, enums.getId());
+		}catch(Exception e) {
+			  e.printStackTrace();
+		}
+}
+	
+	public static List <Enums> getAll(){
+		List <Enums> list = new ArrayList<Enums>();
+		try{
+			ResultSet rs = getAll.executeQuery();
+			while(rs.next()){
+				Enums result = new Enums();
+				result.setEnumerationName(rs.getString(1));
+				list.add(result);
+			}
+	}catch(Exception e)
+		{e.printStackTrace();}
+		return list;
+	}
+	
 	@Override
 	protected String createTableSql() {
 		return "" + "CREATE TABLE currency("
@@ -36,32 +106,4 @@ public class CurrencyRepository extends RepositoryBase{
 	protected String tableName() {
 		return "Currency";
 	}
-
-	public Currency get(int currencyId){
-		try{
-			selectById.setInt(1, currencyId);
-			ResultSet rs = selectById.executeQuery();
-			while(rs.next()){
-				return domain.model.Currency.getByName(rs.getString("name"));
-			}
-			return null;
-		}
-		catch(SQLException ex){
-			ex.printStackTrace();
-			return null;
-		}
-	}
-	
-	public void add(Currency cur) {
-		try {
-			insert.setString(1, cur.name());
-			insert.executeUpdate();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	
-
-	
 }

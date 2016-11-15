@@ -1,17 +1,41 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.persistence.*;
 
-/**
- * Created by L on 05.11.2016.
- */
+import domain.model.Currency;
+import domain.model.Operation;
+
 public class OperationRepository extends RepositoryBase{
+	
+	String insertSql = "INSERT INTO operations(name) VALUES (?)";
+	String selectByIdSql = "SELECT * FROM operations WHERE id=?";
+	String updateByIdSql = "UPDATE operations SET NAME=? WHERE id=?";
+	String deleteByIdSql = "DELETE FROM operations where id=?";
+	String getAllSql = "SELECT * FROM operations";
+			
+	PreparedStatement insert;
+	PreparedStatement selectById;
+	PreparedStatement updateById;
+	PreparedStatement deleteById;
+	PreparedStatement getAll; 
 
 	public OperationRepository(Connection connection) {
 		super(connection);
+		try {
+			insert = connection.prepareStatement(insertSql);
+			selectById = connection.prepareStatement(selectByIdSql);
+			updateById = connection.prepareStatement(updateByIdSql);
+			deleteById = connection.prepareStatement(deleteByIdSql);
+			getAll = connection.prepareStatement(getAllSql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
