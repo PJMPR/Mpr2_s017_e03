@@ -5,9 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 import domain.model.Currency;
+import domain.model.Enums;
+import domain.model.History;
 import domain.model.Operation;
 
 public class OperationRepository extends RepositoryBase{
@@ -22,7 +27,7 @@ public class OperationRepository extends RepositoryBase{
 	PreparedStatement selectById;
 	PreparedStatement updateById;
 	PreparedStatement deleteById;
-	PreparedStatement getAll; 
+	static PreparedStatement getAll; 
 
 	public OperationRepository(Connection connection) {
 		super(connection);
@@ -37,6 +42,61 @@ public class OperationRepository extends RepositoryBase{
 			e.printStackTrace();
 		}
 	}
+	
+	public Enums get(int enumsId){
+		try{
+			selectById.setInt(1, enumsId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+            Enums result = new Enums();
+            result.setId(rs.getInt("id"));
+			return result;
+		}
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+			return null;
+		}
+	
+	public void add(Enums enums) {
+		try {
+			insert.setString(1, enums.getEnumerationName());
+			insert.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}	
+	
+	public void update(Enums enums){
+		 try {
+			updateById.setString(1, enums.getEnumerationName());
+		} catch (SQLException e) {
+		      e.printStackTrace();
+		}
+}
+	
+	public void delete(Enums enums){
+		try{
+		    deleteById.setInt(1, enums.getId());
+		}catch(Exception e) {
+			  e.printStackTrace();
+		}
+}
+	
+	public static List <Enums> getAll(){
+		List <Enums> list = new ArrayList<Enums>();
+		try{
+			ResultSet rs = getAll.executeQuery();
+			while(rs.next()){
+				Enums result = new Enums();
+				result.setEnumerationName(rs.getString(1));
+				list.add(result);
+			}
+	}catch(Exception e)
+		{e.printStackTrace();}
+		return list;
+	}
 
 	@Override
 	protected String createTableSql() {
@@ -47,6 +107,5 @@ public class OperationRepository extends RepositoryBase{
 	@Override
 	protected String tableName() {
 		return "Operations";
-
 	}
 }
