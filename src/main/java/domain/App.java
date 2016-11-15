@@ -1,7 +1,6 @@
 package domain;
 
 import dao.*;
-import domain.model.Operation;
 import domain.model.Person;
 
 import java.sql.Connection;
@@ -19,25 +18,14 @@ public class App {
             OperationRepository operationRepository = new OperationRepository(connection);
             WalletRepository walletRepository = new WalletRepository(connection);
             HistoryRepository historyRepository = new HistoryRepository(connection);
-
-            Person Jan = new Person();
-            Jan.setName("Jan");
-            Jan.setSurname("Kowalski");
-            personRepository.add(Jan);
-            Person janFromDb = personRepository.get(0);
-            System.out.println(janFromDb.getName() + " " + janFromDb.getSurname());
-
-
-            operationRepository.add(Operation.income);
-            operationRepository.add(Operation.income);
-            operationRepository.add(Operation.outcome);
-            operationRepository.add(Operation.income);
-
-            System.out.println(operationRepository.get(0));
-
-            operationRepository.delete(40);
-            operationRepository.getAll();
-            operationRepository.setUpdate(1, Operation.outcome);
+            
+            Person janek = new Person();
+            janek.setName("janek");
+            janek.setSurname("kowalski");
+            //spersonRepository.add(janek);
+            Person janekFromDb = personRepository.get(0);
+            System.out.println(janekFromDb.getName() + " " + janekFromDb.getSurname());
+            System.out.print("End");
 
         } catch (SQLException e) {
             e.printStackTrace();

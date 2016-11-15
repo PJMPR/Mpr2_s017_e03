@@ -7,42 +7,43 @@ import java.sql.Statement;
 
 public abstract class RepositoryBase {
 
-    private Connection connection;
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    protected RepositoryBase(Connection connection) {
-        this.connection = connection;
-        createTableIfnotExists(connection);
-    }
+	private Connection connection;
 
 
-    protected abstract String createTableSql();
+	public Connection getConnection() {
+		return connection;
+	}
+	
+	protected RepositoryBase(Connection connection){
+		this.connection = connection;
+		createTableIfnotExists();
+	}
 
-    protected abstract String tableName();
+	
+	protected abstract String createTableSql();
+	protected abstract String tableName();
+	
+	
 
+	private void createTableIfnotExists() {
+		try {
+			Statement createTable = this.connection.createStatement();
 
-    private void createTableIfnotExists(Connection connection) {
-        try {
-            Statement createTable = connection.createStatement();
+			boolean tableExists = false;
 
-            boolean tableExists = false;
+			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 
-            ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
+			while (rs.next()) {
+				if (rs.getString("Table_Name").equalsIgnoreCase(tableName())) {
+					tableExists = true;
+					break;
+				}
+			}
+			if (!tableExists)
+				createTable.executeUpdate(createTableSql());
 
-            while (rs.next()) {
-                if (rs.getString("Table_Name").equalsIgnoreCase(tableName())) {
-                    tableExists = true;
-                    break;
-                }
-            }
-            if (!tableExists)
-                createTable.executeUpdate(createTableSql());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

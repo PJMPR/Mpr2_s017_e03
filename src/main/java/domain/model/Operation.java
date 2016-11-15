@@ -2,7 +2,7 @@ package domain.model;
 
 public enum Operation {
 
-    income, outcome, transfer;
+    income, outcome,transfer;
 
     public static Operation getByName(String enumName) {
         for (Operation operation : Operation.values()) {
