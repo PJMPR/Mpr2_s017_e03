@@ -20,7 +20,6 @@ public class EnumDictionaryRepository extends RepositoryBase {
 		try {
 			insert = connection.prepareStatement(insertSql);
 			selectById = connection.prepareStatement(selectByIdSql);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
