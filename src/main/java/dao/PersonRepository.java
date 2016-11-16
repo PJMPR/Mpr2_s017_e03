@@ -1,59 +1,17 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.print.attribute.standard.PDLOverrideSupported;
-
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.Person;
 
 public class PersonRepository extends RepositoryBase<Person> {
 
-	public PersonRepository(Connection connection) {
-		super(connection);
+	public PersonRepository(Connection connection, IMapResultSetIntoEntity<Person> mapper) {
+		super(connection,mapper);
 	}
-
-	public List<Person> getAll() {
-		try {
-			ResultSet rs = selectAll.executeQuery();
-			List<Person> result = new ArrayList<Person>();
-			while (rs.next()) {
-				Person person = new Person();
-				person.setId(rs.getInt("id"));
-				person.setName(rs.getString("name"));
-				person.setSurname(rs.getString("surname"));
-				result.add(person);
-			}
-			return result;
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return null;
-	}
-
-	public Person get(int personId) {
-		try {
-			selectById.setInt(1, personId);
-			ResultSet rs = selectById.executeQuery();
-			while (rs.next()) {
-				Person result = new Person();
-				result.setId(rs.getInt("id"));
-				result.setName(rs.getString("name"));
-				result.setSurname(rs.getString("surname"));
-				return result;
-			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return null;
-
-	}
-
+	
 	@Override
 	protected String createTableSql() {
 		return "" + "CREATE TABLE people("

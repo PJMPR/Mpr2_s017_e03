@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.IHaveId;
-import domain.model.Person;
 
 public abstract class RepositoryBase<TEntity extends IHaveId> {
 
@@ -18,15 +20,18 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 	protected PreparedStatement update;
 	protected PreparedStatement delete;
 	protected PreparedStatement selectAll;
-
+	
+	protected IMapResultSetIntoEntity<TEntity> mapper; 
 
 	public Connection getConnection() {
 		return connection;
 	}
 	
-	protected RepositoryBase(Connection connection){
+	protected RepositoryBase(Connection connection,
+			IMapResultSetIntoEntity<TEntity> mapper){
 		this.connection = connection;
 		try{
+			this.mapper=mapper;
 			createTableIfnotExists();
 			insert = connection.prepareStatement(insertSql());
 			selectById = connection.prepareStatement(selectByIdSql());
@@ -39,6 +44,36 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 		}
 	}
 
+
+	public List<TEntity> getAll() {
+		try {
+			ResultSet rs = selectAll.executeQuery();
+			List<TEntity> result = new ArrayList<TEntity>();
+			while (rs.next()) {
+				result.add(mapper.map(rs));
+			}
+			return result;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+	public TEntity get(int personId) {
+		try {
+			selectById.setInt(1, personId);
+			ResultSet rs = selectById.executeQuery();
+			while (rs.next()) {
+				return mapper.map(rs);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return null;
+
+	}
+
+	
 	public void update(TEntity entity) {
 		try {
 			setUpdate(entity);
@@ -83,15 +118,6 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 		return "SELECT * FROM "+tableName();
 	}
 
-	protected abstract String insertSql();
-	protected abstract String updateSql();
-	protected abstract void setUpdate(TEntity entity) throws SQLException;
-	protected abstract void setInsert(TEntity entity) throws SQLException;
-	protected abstract String createTableSql();
-	protected abstract String tableName();
-	
-	
-
 	private void createTableIfnotExists() throws SQLException {
 			Statement createTable = this.connection.createStatement();
 
@@ -108,4 +134,11 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 			if (!tableExists)
 				createTable.executeUpdate(createTableSql());
 	}
+
+	protected abstract String insertSql();
+	protected abstract String updateSql();
+	protected abstract void setUpdate(TEntity entity) throws SQLException;
+	protected abstract void setInsert(TEntity entity) throws SQLException;
+	protected abstract String createTableSql();
+	protected abstract String tableName();
 }
