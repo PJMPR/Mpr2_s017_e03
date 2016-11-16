@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.print.attribute.standard.PDLOverrideSupported;
 
 import domain.model.Person;
 
@@ -12,21 +16,68 @@ public class PersonRepository extends RepositoryBase {
 
 	String insertSql = "INSERT INTO people(name, surname) VALUES (?,?)";
 	String selectByIdSql = "SELECT * FROM people WHERE id=?";
+	String updateSql = "UPDATE people SET (name, surname)=(?,?) WHERE id=?";
+	String deleteSql = "DELETE FROM people WHERE id=?";
+	String selectAllSql = "SELECT * FROM people";
 	
 	PreparedStatement insert;
 	PreparedStatement selectById;
+	PreparedStatement update;
+	PreparedStatement delete;
+	PreparedStatement selectAll;
 	
 	public PersonRepository(Connection connection) {
 		super(connection);
 		try {
 			insert = connection.prepareStatement(insertSql);
 			selectById = connection.prepareStatement(selectByIdSql);
-
+			update=connection.prepareStatement(updateSql);
+			delete=connection.prepareStatement(deleteSql);
+			selectAll=connection.prepareStatement(selectAllSql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void delete(Person person){
+		try {
+			delete.setInt(1, person.getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void update(Person person){
+		try {
+			update.setString(1, person.getName());
+			update.setString(2, person.getSurname());
+			update.setInt(3, person.getId());
+			update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public List<Person> getAll(){
+		try{
+			ResultSet rs = selectAll.executeQuery();
+			List<Person> result = new ArrayList<Person>();
+			while(rs.next()){
+				Person person = new Person();
+				person.setId(rs.getInt("id"));
+				person.setName(rs.getString("name"));
+				person.setSurname(rs.getString("surname"));
+				result.add(person);
+			}
+			return result;
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
 	public Person get(int personId){
 		try{
 			selectById.setInt(1, personId);
@@ -45,6 +96,7 @@ public class PersonRepository extends RepositoryBase {
 		return null;
 		
 	}
+	
 	
 	public void add(Person person) {
 		try {
