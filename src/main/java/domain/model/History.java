@@ -11,7 +11,7 @@ import java.sql.Date;
  *
  * @author mati
  */
-public class History {
+public class History implements IHaveId{
     
     private Integer id;
     private Date date;
@@ -63,7 +63,7 @@ public class History {
         
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
