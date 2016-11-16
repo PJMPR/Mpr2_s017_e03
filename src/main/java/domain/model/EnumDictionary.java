@@ -1,6 +1,6 @@
 package domain.model;
 
-public class EnumDictionary {
+public class EnumDictionary implements IHaveId {
 
 	private int id;
 	private int intKey;
