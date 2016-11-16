@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,31 +8,10 @@ import java.util.List;
 
 import domain.model.EnumDictionary;
 
-public class EnumDictionaryRepository extends RepositoryBase {
-
-	String insertSql = "INSERT INTO enumDictionary(intKey, stringKey, value, enumerationName) VALUES (?,?,?,?)";
-	String selectByIdSql = "SELECT * FROM enumDictionary WHERE id=?";
-	String deleteSql = "DELETE FROM enumDictionary WHERE id=?";
-	String updateSql = "UPDATE enumDictionary SET (intKey, stringKey, value, enumerationName)=(?,?,?,?) WHERE id=?";
-	String selectAllSql = "SELECT * FROM enumDictionary";
-
-	PreparedStatement insert;
-	PreparedStatement selectById;
-	PreparedStatement update;
-	PreparedStatement delete;
-	PreparedStatement selectAll;
+public class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 
 	public EnumDictionaryRepository(Connection connection) {
 		super(connection);
-		try {
-			insert = connection.prepareStatement(insertSql);
-			selectById = connection.prepareStatement(selectByIdSql);
-			delete = connection.prepareStatement(deleteSql);
-			update = connection.prepareStatement(updateSql);
-			selectAll = connection.prepareStatement(selectAllSql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public EnumDictionary get(int enumDictionaryId) {
@@ -54,40 +32,6 @@ public class EnumDictionaryRepository extends RepositoryBase {
 		}
 		return null;
 
-	}
-
-	public void add(EnumDictionary enumDictionary) {
-		try {
-			insert.setInt(1, enumDictionary.getIntKey());
-			insert.setString(2, enumDictionary.getStringKey());
-			insert.setString(3, enumDictionary.getValue());
-			insert.setString(4, enumDictionary.getEnumerationName());
-			insert.executeUpdate();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public void delete(EnumDictionary enumDictionary) {
-		try {
-			delete.setInt(1, enumDictionary.getId());
-			delete.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void update(EnumDictionary enumDictionary) {
-		try {
-			update.setInt(1, enumDictionary.getIntKey());
-			update.setString(2, enumDictionary.getStringKey());
-			update.setString(3, enumDictionary.getValue());
-			update.setString(4, enumDictionary.getEnumerationName());
-			update.setInt(5, enumDictionary.getId());
-			update.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public List<EnumDictionary> getAll() {
@@ -122,6 +66,30 @@ public class EnumDictionaryRepository extends RepositoryBase {
 	@Override
 	protected String tableName() {
 		return "enumDictionary";
+	}
+
+	protected String insertSql() {
+		return "INSERT INTO enumDictionary(intKey, stringKey, value, enumerationName) VALUES (?,?,?,?)";
+	}
+
+	protected String updateSql() {
+		return "UPDATE enumDictionary SET (intKey, stringKey, value, enumerationName)=(?,?,?,?) WHERE id=?";
+	}
+
+	@Override
+	protected void setUpdate(EnumDictionary entity) throws SQLException {
+		update.setInt(1, entity.getIntKey());
+		update.setString(2, entity.getStringKey());
+		update.setString(3, entity.getValue());
+		update.setString(4, entity.getEnumerationName());	
+	}
+
+	@Override
+	protected void setInsert(EnumDictionary entity) throws SQLException {
+		insert.setInt(1, entity.getIntKey());
+		insert.setString(2, entity.getStringKey());
+		insert.setString(3, entity.getValue());
+		insert.setString(4, entity.getEnumerationName());
 	}
 
 }
