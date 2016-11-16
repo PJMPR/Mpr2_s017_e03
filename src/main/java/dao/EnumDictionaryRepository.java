@@ -1,58 +1,15 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.EnumDictionary;
 
 public class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 
-	public EnumDictionaryRepository(Connection connection) {
-		super(connection);
-	}
-
-	public EnumDictionary get(int enumDictionaryId) {
-		try {
-			selectById.setInt(1, enumDictionaryId);
-			ResultSet rs = selectById.executeQuery();
-			while (rs.next()) {
-				EnumDictionary result = new EnumDictionary();
-				result.setId(rs.getInt("id"));
-				result.setIntKey(rs.getInt("intKey"));
-				result.setStringKey(rs.getString("stringKey"));
-				result.setValue(rs.getString("value"));
-				result.setEnumerationName(rs.getString("enumerationName"));
-				return result;
-			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return null;
-
-	}
-
-	public List<EnumDictionary> getAll() {
-		try {
-			ResultSet rs = selectAll.executeQuery();
-			List<EnumDictionary> result = new ArrayList<EnumDictionary>();
-			while (rs.next()) {
-				EnumDictionary enumDictionary = new EnumDictionary();
-				enumDictionary.setId(rs.getInt("id"));
-				enumDictionary.setIntKey(rs.getInt("intKey"));
-				enumDictionary.setStringKey(rs.getString("stringKey"));
-				enumDictionary.setValue(rs.getString("value"));
-				enumDictionary.setEnumerationName(rs
-						.getString("enumerationName"));
-				result.add(enumDictionary);
-			}
-			return result;
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return null;
+	public EnumDictionaryRepository(Connection connection, IMapResultSetIntoEntity<EnumDictionary> mapper) {
+		super(connection, mapper);
 	}
 
 	@Override
