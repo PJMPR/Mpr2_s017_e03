@@ -3,7 +3,7 @@ package domain.model;
 import java.math.BigDecimal;
 
 
-public class Wallet implements IHaveId {
+public class Wallet implements IHaveId{
 
     private int id;
     private int accountID;
