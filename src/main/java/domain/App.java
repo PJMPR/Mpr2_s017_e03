@@ -13,17 +13,7 @@ public class App {
         try {
             Connection connection =
                     DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
-            PersonRepository personRepository = new PersonRepository(connection);
-            WalletRepository walletRepository = new WalletRepository(connection);
-            HistoryRepository historyRepository = new HistoryRepository(connection);
-            
-            Person janek = new Person();
-            janek.setName("janek");
-            janek.setSurname("kowalski");
-            //spersonRepository.add(janek);
-            Person janekFromDb = personRepository.get(0);
-            System.out.println(janekFromDb.getName() + " " + janekFromDb.getSurname());
-            System.out.print("End");
+           
 
         } catch (SQLException e) {
             e.printStackTrace();

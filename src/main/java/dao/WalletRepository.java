@@ -21,42 +21,6 @@ public class WalletRepository extends RepositoryBase<Wallet>{
 		super(connection,mapper);
 	}
 
-	public List <Wallet> getAll(){
-
- 		try{
- 			ResultSet rs = selectAll.executeQuery();
- 	 		List <Wallet> result = new ArrayList<Wallet>();
- 			while(rs.next()){
- 				Wallet wallet = new Wallet();
- 				wallet.setId(rs.getInt(1));
- 				wallet.setAccountID(rs.getInt(2));
- 				wallet.setAsset(rs.getBigDecimal(3));
- 				result.add(wallet);
- 			}
- 	return result;
-	} catch (SQLException ex) {
-		ex.printStackTrace();
-	}
-	return null;
-}
-
-	public Wallet get(int walletId){
-		try{
-			selectById.setInt(1, walletId);
-			ResultSet rs = selectById.executeQuery();
-			while(rs.next()){
-				Wallet result = new Wallet();
-				result.setId(rs.getInt("id"));
-				result.setAccountID(rs.getInt("account id"));
-				result.setAsset(rs.getBigDecimal("asset"));
-				return result;
-			}
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		return null;
-	}
-		
 		@Override
 		protected String createTableSql() {
 			return "CREATE TABLE wallet("
