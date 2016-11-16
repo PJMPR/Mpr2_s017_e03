@@ -1,45 +1,21 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.History;
+
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by L on 05.11.2016.
  */
-public class HistoryRepository extends RepositoryBase {
+public class HistoryRepository extends RepositoryBase<History> {
 
-    String insertSql = "INSERT INTO history("
-            + "date, amount, rate,"
-            + " WALLET_FROM_ID,"
-            + " WALLTET_TO_ID,"
-            + "OPERATION_ID"
-            + ") VALUES (?,?,?,?,?,?)";
 
-    String selectByIdSql = "SELECT "
-            + "id,"
-            + "date,"
-            + "amount,"
-            + "rate,"
-            + " WALLET_FROM_ID,"
-            + " WALLTET_TO_ID,"
-            + "OPERATION_ID"
-            + " FROM history WHERE id=?";
+    public HistoryRepository(Connection connection, IMapResultSetIntoEntity<History> mapper) {
+        super(connection, mapper);
 
-    PreparedStatement insert;
-    PreparedStatement selectById;
-
-    public HistoryRepository(Connection connection) {
-        super(connection);
-        try {
-			insert = connection.prepareStatement(insertSql);
-			selectById = connection.prepareStatement(selectByIdSql);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
     }
 
     @Override
@@ -64,20 +40,6 @@ public class HistoryRepository extends RepositoryBase {
 
     }
 
-    public void add(History history) {
-        try {
-            insert.setDate(1, history.getDate());
-            insert.setDouble(2, history.getAmount());
-            insert.setDouble(3, history.getRate());
-            insert.setInt(4, history.getFromWalletId());
-            insert.setInt(5, history.getToWalletId());
-            insert.setInt(6, history.getOperationId());
-            insert.executeUpdate();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     public History get(Integer id) {
         try {
             selectById.setInt(1, id);
@@ -98,5 +60,40 @@ public class HistoryRepository extends RepositoryBase {
         }
         return null;
 
+    }
+
+    @Override
+    protected String insertSql() {
+        return "INSERT INTO history("
+                + "date, amount, rate,"
+                + " WALLET_FROM_ID,"
+                + " WALLTET_TO_ID,"
+                + "OPERATION_ID"
+                + ") VALUES (?,?,?,?,?,?)";
+    }
+
+    @Override
+    protected String updateSql() {
+        return "UPDATE HISTORY SET (date, amount, rate, WALLET_FROM_ID" +
+                ", WALLET_TO_ID, OPERATION_ID)= (?,?,?,?,?,?) WHERE id = ?";
+    }
+
+    @Override
+    protected void setUpdate(History history) throws SQLException {
+        update.setDate(1, history.getDate());
+        update.setFloat(2, history.getAmount());
+        update.setDouble(3, history.getRate());
+        update.setInt(4, history.getFromWalletId());
+        update.setInt(5, history.getToWalletId());
+
+    }
+
+    @Override
+    protected void setInsert(History history) throws SQLException {
+        insert.setDate(1, history.getDate());
+        insert.setDouble(2, history.getAmount());
+        insert.setDouble(3, history.getRate());
+        insert.setInt(4, history.getFromWalletId());
+        insert.setInt(5, history.getToWalletId());
     }
 }
