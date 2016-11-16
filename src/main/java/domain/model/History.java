@@ -6,7 +6,8 @@ import java.sql.Date;
 public class History {
 
     private int id;
-    private Date date;
+    private Wallet wallet;
+	private Date date;
     private Operation operation;
     private BigDecimal amount;
     private Wallet from;
@@ -16,6 +17,14 @@ public class History {
     public int getId() {
         return id;
     }
+
+    public Wallet getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
+	}
 
     public void setId(int id) {
         this.id = id;
