@@ -9,8 +9,6 @@ import java.util.List;
 
 import domain.model.EnumDictionary;
 
-;
-
 public class EnumDictionaryRepository extends RepositoryBase {
 
 	String insertSql = "INSERT INTO enumDictionary(intKey, stringKey, value, enumerationName) VALUES (?,?,?,?)";
