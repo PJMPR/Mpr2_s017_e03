@@ -4,12 +4,8 @@ import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.History;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by L on 05.11.2016.
- */
 public class HistoryRepository extends RepositoryBase<History> {
 
 
@@ -37,28 +33,6 @@ public class HistoryRepository extends RepositoryBase<History> {
     @Override
     protected String tableName() {
         return "History";
-
-    }
-
-    public History get(Integer id) {
-        try {
-            selectById.setInt(1, id);
-            ResultSet rs = selectById.executeQuery();
-            while (rs.next()) {
-                History result = new History();
-                result.setId(rs.getInt("id"));
-                result.setDate(rs.getDate("date"));
-                result.setAmount(rs.getFloat("amount"));
-                result.setRate(rs.getDouble("rate"));
-                result.setFromWalletId(rs.getInt("wallet_from_id"));
-                result.setToWalletId(rs.getInt("wallet_to_id"));
-                result.setOperationId(rs.getInt("operation_id"));
-                return result;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
 
     }
 
