@@ -3,7 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import domain.DataStructures.History;
+import domain.model.History;
 import java.sql.ResultSet;
 
 /**
