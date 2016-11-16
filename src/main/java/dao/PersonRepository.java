@@ -12,58 +12,17 @@ import javax.print.attribute.standard.PDLOverrideSupported;
 
 import domain.model.Person;
 
-public class PersonRepository extends RepositoryBase {
+public class PersonRepository extends RepositoryBase<Person> {
 
-	String insertSql = "INSERT INTO people(name, surname) VALUES (?,?)";
-	String selectByIdSql = "SELECT * FROM people WHERE id=?";
-	String updateSql = "UPDATE people SET (name, surname)=(?,?) WHERE id=?";
-	String deleteSql = "DELETE FROM people WHERE id=?";
-	String selectAllSql = "SELECT * FROM people";
-	
-	PreparedStatement insert;
-	PreparedStatement selectById;
-	PreparedStatement update;
-	PreparedStatement delete;
-	PreparedStatement selectAll;
-	
 	public PersonRepository(Connection connection) {
 		super(connection);
-		try {
-			insert = connection.prepareStatement(insertSql);
-			selectById = connection.prepareStatement(selectByIdSql);
-			update=connection.prepareStatement(updateSql);
-			delete=connection.prepareStatement(deleteSql);
-			selectAll=connection.prepareStatement(selectAllSql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
-	public void delete(Person person){
+	public List<Person> getAll() {
 		try {
-			delete.setInt(1, person.getId());
-			delete.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void update(Person person){
-		try {
-			update.setString(1, person.getName());
-			update.setString(2, person.getSurname());
-			update.setInt(3, person.getId());
-			update.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public List<Person> getAll(){
-		try{
 			ResultSet rs = selectAll.executeQuery();
 			List<Person> result = new ArrayList<Person>();
-			while(rs.next()){
+			while (rs.next()) {
 				Person person = new Person();
 				person.setId(rs.getInt("id"));
 				person.setName(rs.getString("name"));
@@ -71,41 +30,28 @@ public class PersonRepository extends RepositoryBase {
 				result.add(person);
 			}
 			return result;
-		}
-		catch(SQLException ex){
+		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 		return null;
 	}
-	
-	public Person get(int personId){
-		try{
+
+	public Person get(int personId) {
+		try {
 			selectById.setInt(1, personId);
 			ResultSet rs = selectById.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Person result = new Person();
 				result.setId(rs.getInt("id"));
 				result.setName(rs.getString("name"));
 				result.setSurname(rs.getString("surname"));
 				return result;
 			}
-		}
-		catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		return null;
-		
-	}
-	
-	
-	public void add(Person person) {
-		try {
-			insert.setString(1, person.getName());
-			insert.setString(2, person.getSurname());
-			insert.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
+		return null;
+
 	}
 
 	@Override
@@ -120,4 +66,26 @@ public class PersonRepository extends RepositoryBase {
 		return "people";
 	}
 
+	protected String insertSql() {
+		return "INSERT INTO people(name, surname) VALUES (?,?)";
+	}
+
+	protected String updateSql() {
+		return "UPDATE people SET (name, surname)=(?,?) WHERE id=?";
+	}
+
+
+	@Override
+	protected void setUpdate(Person entity) throws SQLException {
+		update.setString(1, entity.getName());
+		update.setString(2, entity.getSurname());
+		
+	}
+
+	@Override
+	protected void setInsert(Person entity) throws SQLException {
+		insert.setString(1, entity.getName());
+		insert.setString(2, entity.getSurname());
+	}
+	
 }

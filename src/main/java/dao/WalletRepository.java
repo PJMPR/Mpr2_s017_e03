@@ -9,10 +9,6 @@ import java.util.List;
 
 import domain.model.Wallet;
 
-/**
- * Created by L on 05.11.2016.
- */
-
 public class WalletRepository extends RepositoryBase{
 	
       String insertSql = "INSERT INTO wallet(accountId, asset) VALUES (?,?)";
@@ -25,7 +21,7 @@ public class WalletRepository extends RepositoryBase{
       PreparedStatement selectById;
       PreparedStatement updateById;
       PreparedStatement deleteById;
-      static PreparedStatement getAll;
+      PreparedStatement selectAll;
 
  	public WalletRepository(Connection connection) {
  		super(connection);
@@ -34,7 +30,7 @@ public class WalletRepository extends RepositoryBase{
 			selectById = connection.prepareStatement(selectByIdSql);
 			updateById = connection.prepareStatement(updateByIdSql);
 			deleteById = connection.prepareStatement(deleteByIdSql);
-			getAll = connection.prepareStatement(getAllSql);
+			selectAll = connection.prepareStatement(getAllSql);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,10 +87,10 @@ public class WalletRepository extends RepositoryBase{
 		}
 }
 
-	public static List <Wallet> getAll(){
+	public List <Wallet> getAll(){
 		 		List <Wallet> list = new ArrayList<Wallet>();
 		 		try{
-		 			ResultSet rs = getAll.executeQuery();
+		 			ResultSet rs = selectAll.executeQuery();
 		 			while(rs.next()){
 		 				Wallet result = new Wallet();
 		 				result.setId(rs.getInt(1));

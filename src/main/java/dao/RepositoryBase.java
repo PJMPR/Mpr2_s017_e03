@@ -1,13 +1,23 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class RepositoryBase {
+import domain.model.IHaveId;
+import domain.model.Person;
 
-	private Connection connection;
+public abstract class RepositoryBase<TEntity extends IHaveId> {
+
+	protected Connection connection;
+
+	protected PreparedStatement insert;
+	protected PreparedStatement selectById;
+	protected PreparedStatement update;
+	protected PreparedStatement delete;
+	protected PreparedStatement selectAll;
 
 
 	public Connection getConnection() {
@@ -16,17 +26,73 @@ public abstract class RepositoryBase {
 	
 	protected RepositoryBase(Connection connection){
 		this.connection = connection;
-		createTableIfnotExists();
+		try{
+			createTableIfnotExists();
+			insert = connection.prepareStatement(insertSql());
+			selectById = connection.prepareStatement(selectByIdSql());
+			update=connection.prepareStatement(updateSql());
+			delete=connection.prepareStatement(deleteSql());
+			selectAll=connection.prepareStatement(selectAllSql());
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
 	}
 
+	public void update(TEntity entity) {
+		try {
+			setUpdate(entity);
+			update.setInt(3, entity.getId());
+			update.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void add(TEntity entity) {
+		try {
+			setInsert(entity);
+			insert.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	public void delete(TEntity entity) {
+		try {
+			delete.setInt(1, entity.getId());
+			delete.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	protected String selectByIdSql() {
+		return "SELECT * FROM "
+				+ tableName()
+				+ " WHERE id=?";
+	}
+
+
+	protected String deleteSql() {
+		return "DELETE FROM "
+				+ tableName()
+				+ " WHERE id=?";
+	}
+
+	protected String selectAllSql() {
+		return "SELECT * FROM "+tableName();
+	}
+
+	protected abstract String insertSql();
+	protected abstract String updateSql();
+	protected abstract void setUpdate(TEntity entity) throws SQLException;
+	protected abstract void setInsert(TEntity entity) throws SQLException;
 	protected abstract String createTableSql();
 	protected abstract String tableName();
 	
 	
 
-	private void createTableIfnotExists() {
-		try {
+	private void createTableIfnotExists() throws SQLException {
 			Statement createTable = this.connection.createStatement();
 
 			boolean tableExists = false;
@@ -41,9 +107,5 @@ public abstract class RepositoryBase {
 			}
 			if (!tableExists)
 				createTable.executeUpdate(createTableSql());
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 }
