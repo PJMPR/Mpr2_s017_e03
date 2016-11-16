@@ -15,7 +15,7 @@ import domain.model.Wallet;
 
 public class WalletRepository extends RepositoryBase{
 	
-      String insertSql = "INSERT INTO wallet(accountId) VALUES (?)";
+      String insertSql = "INSERT INTO wallet(accountId, asset) VALUES (?,?)";
       String selectByIdSql = "SELECT * FROM wallet WHERE id=?";
       String updateByIdSql = "UPDATE wallet SET ACCOUNTID=? WHERE id=?";
       String deleteByIdSql = "DELETE FROM wallet where id=?";
