@@ -1,17 +1,55 @@
 package dao;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IHistoryRepository;
 import domain.model.History;
+import domain.model.Operation;
+import domain.model.Wallet;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class HistoryRepository extends RepositoryBase<History> {
+public class HistoryRepository extends RepositoryBase<History> implements IHistoryRepository {
 
 
     public HistoryRepository(Connection connection, IMapResultSetIntoEntity<History> mapper) {
         super(connection, mapper);
 
+    }
+
+    public List<History> of(Wallet wallet) {
+        List<History> historiesOf = new ArrayList<History>();
+        for (int i = 0; i < historiesOf.size(); i++) {
+            if (historiesOf.get(i).equals(wallet)) {
+                return historiesOf;
+            }
+        }
+        return null;
+    }
+
+    public List<History> ofType(Operation operation) {
+        List<History> historiesOfType = new ArrayList<History>();
+        for (int i = 0; i < historiesOfType.size(); i++) {
+            if (historiesOfType.get(i).equals(operation)) {
+                return historiesOfType;
+            }
+        }
+        return null;
+    }
+
+    public List<History> withDate(final Date from, Date to) {
+        List<History> historiesWithDate = new ArrayList<History>();
+        for (int i = 0; i < historiesWithDate.size(); i++) {
+            List<History> histories = historiesWithDate.stream()
+                    .filter(h -> h.getDate().after(from) && h.getDate().before(to))
+                    .collect(Collectors.toList());
+            return histories;
+        }
+        return null;
     }
 
     @Override
