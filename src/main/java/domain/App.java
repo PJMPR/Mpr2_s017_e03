@@ -1,22 +1,22 @@
 package domain;
 
 import dao.*;
+import dao.repositories.IRepositoryCatalog;
 import domain.model.Person;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class App {
     public static void main(String[] args) {
-        try {
-            Connection connection =
-                    DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/workdb");
-           
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+       
+    	IRepositoryCatalog catalogOf;
+    	
+    	List<Person> people =  catalogOf.People().withName("janek");
+    	
+    	catalogOf.Dictionaries().withDictionaryName("gender");
     }
 }

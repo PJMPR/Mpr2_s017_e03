@@ -2,21 +2,17 @@ package dao;
 
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.attribute.standard.PDLOverrideSupported;
-
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IWalletRepository;
 import dao.uow.IUnitOfWork;
 import domain.model.Person;
 import domain.model.Wallet;
 
-public class WalletRepository extends RepositoryBase<Wallet>{
+public class WalletRepository extends RepositoryBase<Wallet>
+implements IWalletRepository{
 
 	public WalletRepository(Connection connection,
 			IMapResultSetIntoEntity<Wallet> mapper, IUnitOfWork uow) {
@@ -57,6 +53,11 @@ public class WalletRepository extends RepositoryBase<Wallet>{
 		protected void setInsert(Wallet entity) throws SQLException {
 			insert.setInt(1, entity.getAccountID());
 			insert.setBigDecimal(2, entity.getAsset());
+		}
+
+		public List<Wallet> byPerson(Person person) {
+			// TODO Auto-generated method stub
+			return null;
 		}	
 	}
 
