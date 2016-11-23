@@ -9,6 +9,7 @@ public class Entity {
 	public Entity(IUnitOfWorkRepository repo) {
 		super();
 		this.repo = repo;
+		this.state = EntityState.Unchanged;
 	}
 	Object entity;
 	
@@ -16,8 +17,8 @@ public class Entity {
 		this.entity= entity;
 	}
 	
-	public <TEntity> TEntity getEntity(){
-		return (TEntity) this.entity;
+	public Object getEntity(){
+		return  this.entity;
 	}
 
 	public EntityState getState() {
