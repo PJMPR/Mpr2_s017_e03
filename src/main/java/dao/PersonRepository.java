@@ -2,12 +2,15 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IPersonRepository;
 import dao.uow.IUnitOfWork;
 import domain.model.Person;
 
-public class PersonRepository extends RepositoryBase<Person> {
+public class PersonRepository extends RepositoryBase<Person>
+implements IPersonRepository{
 
 	public PersonRepository(Connection connection,
 			IMapResultSetIntoEntity<Person> mapper, IUnitOfWork uow) {
@@ -46,6 +49,16 @@ public class PersonRepository extends RepositoryBase<Person> {
 	protected void setInsert(Person entity) throws SQLException {
 		insert.setString(1, entity.getName());
 		insert.setString(2, entity.getSurname());
+	}
+
+	public List<Person> withName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Person> withSurname(String surname) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

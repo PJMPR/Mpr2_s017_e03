@@ -1,13 +1,19 @@
 package dao;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.repositories.IHistoryRepository;
 import dao.uow.IUnitOfWork;
 import domain.model.History;
+import domain.model.Operation;
+import domain.model.Wallet;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 
-public class HistoryRepository extends RepositoryBase<History> {
+public class HistoryRepository extends RepositoryBase<History>
+implements IHistoryRepository{
 
 
     public HistoryRepository(Connection connection,
@@ -72,4 +78,19 @@ public class HistoryRepository extends RepositoryBase<History> {
         insert.setInt(4, history.getFromWalletId());
         insert.setInt(5, history.getToWalletId());
     }
+
+	public List<History> of(Wallet wallet) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<History> ofType(Operation operation) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<History> withDate(Date from, Date to) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
