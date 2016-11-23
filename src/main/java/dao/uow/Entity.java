@@ -29,8 +29,25 @@ public class Entity {
 		this.state = state;
 	}
 	
-	
-	
+	public void persist() {
+		switch(this.state) {
+		case Changed:
+			repo.persistUpdate(this);
+			break;
+		case Deleted:
+			repo.persistDelete(this);
+			break;
+		case New:
+			repo.persistAdd(this);
+			break;
+		case Unchanged:
+			break;
+		case Unknown:
+			break;
+		default:
+			break;
+		}
+	}
 	
 }
 

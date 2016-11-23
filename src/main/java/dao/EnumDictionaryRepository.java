@@ -7,13 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.EnumDictionary;
 import domain.model.Person;
 
 public class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 
-	public EnumDictionaryRepository(Connection connection, IMapResultSetIntoEntity<EnumDictionary> mapper) {
-		super(connection, mapper);
+	public EnumDictionaryRepository(Connection connection,
+			IMapResultSetIntoEntity<EnumDictionary> mapper, IUnitOfWork uow) {
+		super(connection, mapper, uow);
 	}
 
 	@Override

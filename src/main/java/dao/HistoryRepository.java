@@ -1,6 +1,7 @@
 package dao;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.History;
 
 import java.sql.Connection;
@@ -9,8 +10,9 @@ import java.sql.SQLException;
 public class HistoryRepository extends RepositoryBase<History> {
 
 
-    public HistoryRepository(Connection connection, IMapResultSetIntoEntity<History> mapper) {
-        super(connection, mapper);
+    public HistoryRepository(Connection connection,
+			IMapResultSetIntoEntity<History> mapper, IUnitOfWork uow) {
+        super(connection, mapper, uow);
 
     }
 
