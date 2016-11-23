@@ -12,6 +12,7 @@ import java.util.List;
 import javax.print.attribute.standard.PDLOverrideSupported;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.Person;
 import domain.model.Wallet;
 
