@@ -1,7 +1,10 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
@@ -12,9 +15,20 @@ import domain.model.Person;
 public class PersonRepository extends RepositoryBase<Person>
 implements IPersonRepository{
 
+    private PreparedStatement getName;
+    private PreparedStatement getSurname;
+
 	public PersonRepository(Connection connection,
 			IMapResultSetIntoEntity<Person> mapper, IUnitOfWork uow) {
 		super(connection,mapper, uow);
+
+		try{
+		    getName = connection.prepareStatement(getNameSql());
+		    getSurname = connection.prepareStatement(getSurNameSql());
+        }catch(SQLException e){
+		    e.printStackTrace();
+        }
+
 	}
 	
 	@Override
@@ -37,6 +51,9 @@ implements IPersonRepository{
 		return "UPDATE people SET (name, surname)=(?,?) WHERE id=?";
 	}
 
+	protected String getNameSql(){return "SELECT * FROM people where name = ?";}
+	protected String getSurNameSql(){return "SELECT * FROM people where surName=?";}
+
 
 	@Override
 	protected void setUpdate(Person entity) throws SQLException {
@@ -51,14 +68,29 @@ implements IPersonRepository{
 		insert.setString(2, entity.getSurname());
 	}
 
-	public List<Person> withName(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public List<Person> withSurname(String surname) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+
+    private List<Person> searchBy(String value){
+        List<Person> people = new ArrayList<>();
+        try{
+            getName.setString(1,value);
+            ResultSet resultSet = getName.executeQuery();
+            while(resultSet.next()){
+                people.add(mapper.map(resultSet));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return people;
+    }
+
+    public List<Person> withName(String name) {
+        return searchBy(name);
+    }
+
+
+    public List<Person> withSurname(String surname) {
+        return searchBy(surname);
+    }
+
 }
