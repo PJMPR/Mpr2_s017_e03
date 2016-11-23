@@ -1,7 +1,10 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
@@ -13,9 +16,32 @@ public class EnumDictionaryRepository
 	extends RepositoryBase<EnumDictionary> 
 	implements IEnumDictionariesRepository{
 
+	protected PreparedStatement selectWithDictionaryName;
+	protected PreparedStatement getEnumValuesByString;
+	protected PreparedStatement getEnumValuesByInt;
+	
+	protected String selectWithDictionaryName() {
+		return "SELECT * FROM enumDictionary WHERE enumerationName=?";
+	}
+	
+	protected String getEnumValuesByString() {
+		return "SELECT value FROM enumDictionary WHERE enumerationName=? AND stringKey=?";
+	}
+	
+	protected String getEnumValuesByInt() {
+		return "SELECT value FROM enumDictionary WHERE enumerationName=? AND intKey=?";
+	}
+	
 	public EnumDictionaryRepository(Connection connection,
 			IMapResultSetIntoEntity<EnumDictionary> mapper, IUnitOfWork uow) {
 		super(connection, mapper, uow);
+		try {
+			selectWithDictionaryName = connection.prepareStatement(selectWithDictionaryName());
+			getEnumValuesByString = connection.prepareStatement(getEnumValuesByString());
+			getEnumValuesByInt = connection.prepareStatement(getEnumValuesByInt());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -59,18 +85,47 @@ public class EnumDictionaryRepository
 	}
 
 	public List<EnumDictionary> withDictionaryName(String enumName) {
-		// TODO Auto-generated method stub
-		return null;
+		List<EnumDictionary> result = new ArrayList<EnumDictionary>();
+		try {
+			selectWithDictionaryName.setString(1, enumName);
+			ResultSet rs = selectWithDictionaryName.executeQuery();
+			while (rs.next()) {
+				result.add(mapper.map(rs));
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return result;
 	}
 
 	public List<EnumDictionary> getEnumValues(String enumName, String stringKey) {
-		// TODO Auto-generated method stub
-		return null;
+		List<EnumDictionary> result = new ArrayList<EnumDictionary>();
+		try {
+			getEnumValuesByString.setString(1, enumName);
+			getEnumValuesByString.setString(2, stringKey);
+			ResultSet rs = getEnumValuesByString.executeQuery();
+			while (rs.next()) {
+				result.add(mapper.map(rs));
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return result;
 	}
 
-	public List<EnumDictionary> getEnumValues(String enumName, int stringKey) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<EnumDictionary> getEnumValues(String enumName, int intKey) {
+		List<EnumDictionary> result = new ArrayList<EnumDictionary>();
+		try {
+			getEnumValuesByInt.setString(1, enumName);
+			getEnumValuesByInt.setInt(2, intKey);
+			ResultSet rs = getEnumValuesByString.executeQuery();
+			while (rs.next()) {
+				result.add(mapper.map(rs));
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return result;
 	}
 
 }
