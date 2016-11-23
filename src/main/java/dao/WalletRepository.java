@@ -18,8 +18,9 @@ import domain.model.Wallet;
 
 public class WalletRepository extends RepositoryBase<Wallet>{
 
-	public WalletRepository(Connection connection, IMapResultSetIntoEntity<Wallet> mapper) {
-		super(connection,mapper);
+	public WalletRepository(Connection connection,
+			IMapResultSetIntoEntity<Wallet> mapper, IUnitOfWork uow) {
+		super(connection,mapper, uow);
 	}
 
 		@Override

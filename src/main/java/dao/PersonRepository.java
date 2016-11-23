@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.Person;
 
 public class PersonRepository extends RepositoryBase<Person> {
 
-	public PersonRepository(Connection connection, IMapResultSetIntoEntity<Person> mapper) {
-		super(connection,mapper);
+	public PersonRepository(Connection connection,
+			IMapResultSetIntoEntity<Person> mapper, IUnitOfWork uow) {
+		super(connection,mapper, uow);
 	}
 	
 	@Override

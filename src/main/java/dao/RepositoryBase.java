@@ -44,7 +44,7 @@ public abstract class RepositoryBase<TEntity extends IHaveId> implements
 			update = connection.prepareStatement(updateSql());
 			delete = connection.prepareStatement(deleteSql());
 			selectAll = connection.prepareStatement(selectAllSql());
-		} catch (SQLException ex) {
+		} catch (SQLException ex) {				
 			ex.printStackTrace();
 		}
 	}
