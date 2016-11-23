@@ -65,7 +65,7 @@ public class EnumDictionaryRepository
 	}
 
 	protected String updateSql() {
-		return "UPDATE enumDictionary SET (intKey, sstringKeytringKey, value, enumerationName)=(?,?,?,?) WHERE id=?";
+		return "UPDATE enumDictionary SET (intKey, stringKey, value, enumerationName)=(?,?,?,?) WHERE id=?";
 	}
 
 	@Override
