@@ -70,11 +70,11 @@ implements IPersonRepository{
 
 
 
-    private List<Person> searchBy(String value){
+    private List<Person> searchBy(String value, PreparedStatement statement){
         List<Person> people = new ArrayList<>();
         try{
-            getName.setString(1,value);
-            ResultSet resultSet = getName.executeQuery();
+            statement.setString(1,value);
+            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 people.add(mapper.map(resultSet));
             }
@@ -85,12 +85,12 @@ implements IPersonRepository{
     }
 
     public List<Person> withName(String name) {
-        return searchBy(name);
+        return searchBy(name, getName);
     }
 
 
     public List<Person> withSurname(String surname) {
-        return searchBy(surname);
+        return searchBy(surname, getSurname);
     }
 
 }
