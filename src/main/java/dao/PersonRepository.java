@@ -24,7 +24,7 @@ implements IPersonRepository{
 
 		try{
 		    getName = connection.prepareStatement(getNameSql());
-		    getSurname = connection.prepareStatement(getSurNameSql());
+		    getSurname = connection.prepareStatement(getSurnameSql());
         }catch(SQLException e){
 		    e.printStackTrace();
         }
@@ -52,7 +52,7 @@ implements IPersonRepository{
 	}
 
 	protected String getNameSql(){return "SELECT * FROM people where name = ?";}
-	protected String getSurNameSql(){return "SELECT * FROM people where surName=?";}
+	protected String getSurnameSql(){return "SELECT * FROM people where surName=?";}
 
 
 	@Override
@@ -68,29 +68,33 @@ implements IPersonRepository{
 		insert.setString(2, entity.getSurname());
 	}
 
-
-
-    private List<Person> searchBy(String value){
-        List<Person> people = new ArrayList<>();
-        try{
-            getName.setString(1,value);
-            ResultSet resultSet = getName.executeQuery();
-            while(resultSet.next()){
-                people.add(mapper.map(resultSet));
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return people;
-    }
-
     public List<Person> withName(String name) {
-        return searchBy(name);
+    	 List<Person> people = new ArrayList<Person>();
+         try{
+             getName.setString(1,name);
+             ResultSet resultSet = getName.executeQuery();
+             while(resultSet.next()){
+                 people.add(mapper.map(resultSet));
+             }
+         }catch (SQLException e){
+             e.printStackTrace();
+         }
+         return people;
     }
 
 
     public List<Person> withSurname(String surname) {
-        return searchBy(surname);
+    	 List<Person> people = new ArrayList<Person>();
+         try{
+             getSurname.setString(1,surname);
+             ResultSet resultSet = getSurname.executeQuery();
+             while(resultSet.next()){
+                 people.add(mapper.map(resultSet));
+             }
+         }catch (SQLException e){
+             e.printStackTrace();
+         }
+         return people;
     }
 
 }
