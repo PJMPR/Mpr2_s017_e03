@@ -33,7 +33,7 @@ public class RepositoryCatalog implements IRepositoryCatalog {
 		return new HistoryRepository(connection, new HistoryMapper(), uow);
 	}
 
-	public IWalletRepository Wallets() {
+	public IWalletRepository Wallet() {
 		return new WalletRepository(connection, new WalletMapper(), uow);
 	}
 
