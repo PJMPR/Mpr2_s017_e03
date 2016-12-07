@@ -7,8 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.oracle.jrockit.jfr.ContentType;
 
 @WebServlet("/Test")
 public class Test extends HttpServlet {
@@ -20,16 +20,22 @@ public class Test extends HttpServlet {
 					throws ServletException, IOException {
 		
 		String name = request.getParameter("name");
-		String surname = request.getParameter("surname");
+		
+		HttpSession session = request.getSession();
+		
+		if(name!=null&&!name.equals(""))
+			session.setAttribute("name", name);
 		
 		response.setContentType("text/html");
-		
+
 		response.getWriter().println("<h1>Hello "
 				+ name
-				+ " "
-				+ surname
+				+ "</h1>"
+				+ "<br />"
+				+ "<h1>Hello From session"
+				+ session.getAttribute("name")
 				+ "</h1>");
-		
+		response.sendRedirect("/addPerson.html");
 	}
 
 }
