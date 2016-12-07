@@ -7,6 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import domain.model.Person;
 
 @WebServlet("/personServlet")
 public class personServlet extends HttpServlet {
@@ -16,16 +19,12 @@ public class personServlet extends HttpServlet {
 			HttpServletResponse response) 
 					throws ServletException, IOException {
 		
-		String name = request.getParameter("name");
-		String surname = request.getParameter("surname");
-		
-		response.setContentType("text/html");
-		
-		response.getWriter().println("<h1>Hello "
-				+ name
-				+ " "
-				+ surname
-				+ "</h1>");
+		Person person = new Person();
+		person.setName(request.getParameter("name"));
+		person.setSurname(request.getParameter("surname"));
+		HttpSession session = request.getSession();
+		session.setAttribute("person", person);
+		response.sendRedirect("/addWallet.html");
 		
 	}
 
