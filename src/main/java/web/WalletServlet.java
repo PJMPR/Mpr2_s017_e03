@@ -1,5 +1,8 @@
 package web;
 
+import domain.model.Currency;
+import domain.model.Person;
+import domain.model.Wallet;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +25,11 @@ public class WalletServlet extends HttpServlet {
         
         HttpSession session = req.getSession();
 
-        session.setAttribute("currency", name);
-        session.setAttribute("value", value);
+        Wallet wallet = new Wallet();
+        wallet.setCurrency(Currency.getByName(name));
+        wallet.setPerson((Person)session.getAttribute("person"));
+        
+        session.setAttribute("wallet",wallet );
         
         resp.sendRedirect("/final");
     }

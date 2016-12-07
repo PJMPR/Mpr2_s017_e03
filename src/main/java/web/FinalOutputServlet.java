@@ -1,5 +1,8 @@
 package web;
 
+import domain.model.Currency;
+import domain.model.Person;
+import domain.model.Wallet;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,14 +21,16 @@ public class FinalOutputServlet extends HttpServlet {
 
         HttpSession session = req.getSession();
 
-        String currencyName = (String) session.getAttribute("currency");
-        String personName = (String) session.getAttribute("name");
+        
+        Person person = (Person) session.getAttribute("person");
+        Wallet wallet = (Wallet) session.getAttribute("wallet");
 
+        
         resp.setContentType("text/html");
 
-        resp.getWriter().println("<h1> Pan " + personName + " wybrał walutę.<br>"
+        resp.getWriter().println("<h1> Pan " + person.getName() + " wybrał walutę.<br>"
                 + " Wybrana waluta :"
-                + currencyName + "</br></h1>");
+                + wallet.getCurrency().toString() + "</br></h1>");
 
     }
 
