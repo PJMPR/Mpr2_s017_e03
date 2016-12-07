@@ -11,27 +11,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/walletServlet")
-public class WalletServlet extends HttpServlet {
+@WebServlet("/final")
+public class FinalOutputServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("currency");
 
-        Integer value = Integer.parseInt(req.getParameter("value"));
-
-        
         HttpSession session = req.getSession();
 
-        Wallet wallet = new Wallet();
-        wallet.setCurrency(Currency.getByName(name));
-        wallet.setPerson((Person)session.getAttribute("person"));
         
-        session.setAttribute("wallet",wallet );
+        Person person = (Person) session.getAttribute("person");
+        Wallet wallet = (Wallet) session.getAttribute("wallet");
+
         
-        resp.sendRedirect("/final");
+        resp.setContentType("text/html");
+
+        resp.getWriter().println("<h1> Pan " + person.getName() + " wybrał walutę.<br>"
+                + " Wybrana waluta :"
+                + wallet.getCurrency().toString() + "</br></h1>");
+
     }
 
 }
