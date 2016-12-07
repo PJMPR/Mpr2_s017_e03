@@ -20,11 +20,14 @@ public class Test extends HttpServlet {
 					throws ServletException, IOException {
 		
 		String name = request.getParameter("name");
+		String surname = request.getParameter("surname");
 		
 		response.setContentType("text/html");
 		
 		response.getWriter().println("<h1>Hello "
 				+ name
+				+ " "
+				+ surname
 				+ "</h1>");
 		
 	}
