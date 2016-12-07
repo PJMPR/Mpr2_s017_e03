@@ -26,7 +26,7 @@ public class WalletServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         Wallet wallet = new Wallet();
-        wallet.setCurrency(Currency.getByName(name));
+        wallet.setCurrency(Currency.valueOf(name));
         wallet.setPerson((Person)session.getAttribute("person"));
         
         session.setAttribute("wallet",wallet );
