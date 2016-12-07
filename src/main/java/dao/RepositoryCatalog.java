@@ -33,11 +33,12 @@ public class RepositoryCatalog implements IRepositoryCatalog {
 		return new HistoryRepository(connection, new HistoryMapper(), uow);
 	}
 
-	public IWalletRepository Wallet() {
+	public IWalletRepository Wallets() {
 		return new WalletRepository(connection, new WalletMapper(), uow);
 	}
 
 	public void save() {
 		uow.saveChanges();
 	}
+
 }
