@@ -13,7 +13,7 @@ and open the template in the editor.
     <body>
         <div>
             <p>Cześć</p>
-            <form action="walletServlet" enctype="text/plain">
+            <form  enctype="text/plain">
                 <div>
                     Wybierz walutę</br>
                     <select name="currency">
@@ -26,8 +26,11 @@ and open the template in the editor.
                     Podaj wartosc</br>
                     <input name="value" /></br>
                 </div>
-                <input type="submit" value="Wyslij formularz" />
-            </form>
+                <input type="submit" formaction="walletServlet" value="Wyslij formularz" />
+                <input type="submit"  formaction="AddAccountServlet" value="Dodaj konto"/>
+               </form>              
+                
+           
         </div>
     </body>
 </html>
