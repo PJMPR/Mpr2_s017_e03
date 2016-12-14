@@ -6,6 +6,8 @@ import domain.model.Wallet;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,25 +24,21 @@ public class WalletServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("currency");
-        Integer value = Integer.parseInt(req.getParameter("value"));
-        
+        BigDecimal value = new BigDecimal(req.getParameter("value"));
         HttpSession session = req.getSession();
-
         Person person = (Person) session.getAttribute("person");
         if(person==null)
         { 
 	        resp.sendRedirect("/addPerson.html");
-	        return;
         }
-        
         Wallet wallet = new Wallet();
         wallet.setCurrency(Currency.valueOf(name));
+        wallet.setAsset(value);
         wallet.setPerson((Person)session.getAttribute("person"));
-        
-        session.setAttribute("wallet",wallet );
-        
-        
-        resp.sendRedirect("/final");
+        List<Wallet> wallets = new ArrayList<Wallet>();
+        wallets.add(wallet);
+        session.setAttribute("wallets",wallets);
+        resp.sendRedirect("/final.jsp");
     }
 
 }
