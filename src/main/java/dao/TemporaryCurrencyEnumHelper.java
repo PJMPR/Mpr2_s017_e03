@@ -11,14 +11,12 @@ import domain.model.EnumDictionary;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- *
- * @author Tmejs (mateusz.rzad@gmail.com)
- */
+
 public class TemporaryCurrencyEnumHelper {
 
     public static void insertCurrencyEnums() {
-        RepositoryCatalog repo = null;
+        
+    	RepositoryCatalog repo = null;
         try {
             repo = new RepositoryCatalog(App.CONNECTION_STRING);
             EnumDictionaryRepository enumRepo = (EnumDictionaryRepository) repo.Dictionaries();
@@ -28,7 +26,7 @@ public class TemporaryCurrencyEnumHelper {
                 EnumDictionary enumDict=new EnumDictionary();
                 
                 //enumDict.setId(i);
-                enumDict.setEnumerationName(Currency.class.toString());
+                enumDict.setEnumerationName("Currency");
                 enumDict.setValue(Currency.values()[i].getLongName());
                 enumDict.setIntKey(i);
                 enumDict.setStringKey(Currency.values()[i].toString());
