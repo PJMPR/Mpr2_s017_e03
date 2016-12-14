@@ -27,10 +27,8 @@ public class FinalOutputServlet extends HttpServlet {
 
         
         resp.setContentType("text/html");
-
-        resp.getWriter().println("<h1> Pan " + person.getName() + " wybrał walutę.<br>"
-                + " Wybrana waluta :"
-                + wallet.getCurrency().toString() + "</br></h1>");
+        
+        resp.getWriter().println("Wszystko ok");
 
     }
 
