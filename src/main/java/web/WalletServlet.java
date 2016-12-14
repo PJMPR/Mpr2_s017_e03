@@ -29,8 +29,8 @@ public class WalletServlet extends HttpServlet {
         Person person = (Person) session.getAttribute("person");
         if(person==null)
         { 
-        resp.sendRedirect("/addPerson.html");
-        return;
+	        resp.sendRedirect("/addPerson.html");
+	        return;
         }
         
         Wallet wallet = new Wallet();
