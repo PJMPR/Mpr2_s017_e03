@@ -12,7 +12,7 @@
 <body>
 	<%
 	    Person person = (Person) session.getAttribute("person");
-	    List<Wallet> wallets = (List) session.getAttribute("wallet");
+	    List<Wallet> wallets = (List) session.getAttribute("wallets");
 	%>
 	<h1>Name: <%=person.getName() %></h1>
 	<h1>Surname: <%=person.getSurname() %></h1>
