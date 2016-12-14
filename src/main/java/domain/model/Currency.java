@@ -8,5 +8,6 @@ public enum Currency {
     }
     public String getLongName(){
         return longName;
+
     }
 }

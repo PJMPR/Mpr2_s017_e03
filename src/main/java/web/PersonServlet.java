@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import domain.model.Person;
 
 @WebServlet("/personServlet")
-public class personServlet extends HttpServlet {
+public class PersonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, 

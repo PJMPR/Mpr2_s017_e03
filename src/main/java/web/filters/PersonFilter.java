@@ -1,11 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package web.filters;
-
-import domain.model.Wallet;
 
 import java.io.IOException;
 
@@ -20,30 +13,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter("/filter.jsp")
-public class TestFinalOutputServlet implements Filter{
+import domain.model.Person;
 
-   public void destroy() {
+@WebFilter("/addWallet.html")
+public class PersonFilter implements Filter {
+
+    public PersonFilter() {
+    }
+
+	public void destroy() {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
 		HttpServletRequest req = (HttpServletRequest)request;
-                HttpServletResponse resp = (HttpServletResponse)response;
 		HttpSession session = req.getSession();
-
-		Wallet name = (Wallet) session.getAttribute("wallet");
-		if(name!=null){
-                    return;
+		Person person = (Person) session.getAttribute("person");
+		if(person==null){
+			((HttpServletResponse) response).sendRedirect("/addPerson.html");
 		}
 		else{
-			resp.sendRedirect("addWallet.html");
+			chain.doFilter(request, response);
 		}
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
-
 	}
-    
-    
+
 }
