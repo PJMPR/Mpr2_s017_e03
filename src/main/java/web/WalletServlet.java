@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/WalletServlet")
+@WebServlet("/walletServlet")
 public class WalletServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -24,24 +24,22 @@ public class WalletServlet extends HttpServlet {
         String name = req.getParameter("currency");
 
         Integer value = Integer.parseInt(req.getParameter("value"));
-
         
         HttpSession session = req.getSession();
 
+        Person person = (Person) session.getAttribute("person");
+        if(person==null)
+        { 
+        resp.sendRedirect("/addPerson.html");
+        return;
+        }
+        
         Wallet wallet = new Wallet();
         wallet.setCurrency(Currency.valueOf(name));
         wallet.setPerson((Person)session.getAttribute("person"));
         
         session.setAttribute("wallet",wallet );
         
-        if(req.getParameter("value").isEmpty())
-        {
-        	resp.sendRedirect("/addPerson.html");
-        }
-        else
-        {
-        	
-        }
         
         resp.sendRedirect("/final");
     }
