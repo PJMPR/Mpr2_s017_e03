@@ -10,21 +10,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
-
 public class App {
+
+    public static final String CONNECTION_STRING="jdbc:hsqldb:hsql://localhost/workdb";
+    
     public static void main(String[] args) {
-       
-    	Connection connection;
-		try {
-			connection = DriverManager.getConnection("");
-	    	IRepositoryCatalog catalogOf = 
-	    			new RepositoryCatalog(connection, new UnitOfWork(connection));
-	    	
-	    	List<Person> people =  catalogOf.People().withName("janek");
-	    	
-	    	catalogOf.Dictionaries().withDictionaryName("gender");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
     }
 }

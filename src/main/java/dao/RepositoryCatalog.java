@@ -6,39 +6,84 @@ import dao.mappers.PersonMapper;
 import dao.mappers.WalletMapper;
 import dao.repositories.*;
 import dao.uow.IUnitOfWork;
+import dao.uow.UnitOfWork;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class RepositoryCatalog implements IRepositoryCatalog {
 
-	private Connection connection;
-	private IUnitOfWork uow;
+    private IUnitOfWork uow;
+    private Connection connection;
 
-	public RepositoryCatalog(Connection connection, IUnitOfWork uow) {
-		super();
-		this.connection = connection;
-		this.uow = uow;
-	}
+    private EnumDictionaryRepository enumRepo;
+    private HistoryRepository historyRepo;
+    private PersonRepository personRepo;
+    private WalletRepository walletRepo;
 
-	public IPersonRepository People() {
-		return new PersonRepository(connection, new PersonMapper(), uow);
-	}
+    private Connection getNewConnection(String connectionString) throws SQLException {
 
-	public IEnumDictionariesRepository Dictionaries() {
-		return new EnumDictionaryRepository(connection,
-				new EnumDictionaryMapper(), uow);
-	}
+        return DriverManager.getConnection(connectionString);
+    }
 
-	public IHistoryRepository WallettHistory() {
-		return new HistoryRepository(connection, new HistoryMapper(), uow);
-	}
+    private IUnitOfWork getNewUow() {
+        return new UnitOfWork(connection);
+    }
 
-	public IWalletRepository Wallets() {
-		return new WalletRepository(connection, new WalletMapper(), uow);
-	}
+    public void setUow(IUnitOfWork uow) {
+        this.uow = uow;
+    }
 
-	public void save() {
-		uow.saveChanges();
-	}
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
+    public RepositoryCatalog(String connectionString) throws SQLException {
+
+        setConnection(getNewConnection(connectionString));
+        setUow(getNewUow());
+
+    }
+
+    public IPersonRepository People() {
+        if (personRepo == null) {
+            personRepo = new PersonRepository(connection, new PersonMapper(), uow);
+        }
+        return personRepo;
+    }
+
+    public IEnumDictionariesRepository Dictionaries() {
+        if (enumRepo == null) {
+            enumRepo = new EnumDictionaryRepository(connection,
+                    new EnumDictionaryMapper(), uow);
+        }
+        return enumRepo;
+    }
+
+    public IHistoryRepository WallettHistory() {
+        if (historyRepo == null) {
+            historyRepo = new HistoryRepository(connection, new HistoryMapper(), uow);
+        }
+        return historyRepo;
+    }
+
+    public IWalletRepository Wallets() {
+        if(walletRepo!=null)
+        walletRepo=new WalletRepository(connection, new WalletMapper(), uow);
+        return walletRepo;
+    }
+
+    public void save() {
+        uow.saveChanges();
+
+    }
+
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
