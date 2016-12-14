@@ -22,30 +22,13 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     private PersonRepository personRepo;
     private WalletRepository walletRepo;
 
-    private Connection getNewConnection(String connectionString) throws SQLException {
-
-        return DriverManager.getConnection(connectionString);
-    }
-
-    private IUnitOfWork getNewUow() {
-        return new UnitOfWork(connection);
-    }
-
-    public void setUow(IUnitOfWork uow) {
-        this.uow = uow;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-
     public RepositoryCatalog(String connectionString) throws SQLException {
 
         setConnection(getNewConnection(connectionString));
         setUow(getNewUow());
 
     }
-
+    
     public IPersonRepository People() {
         if (personRepo == null) {
             personRepo = new PersonRepository(connection, new PersonMapper(), uow);
@@ -83,4 +66,22 @@ public class RepositoryCatalog implements IRepositoryCatalog {
             e.printStackTrace();
         }
     }
+
+    private Connection getNewConnection(String connectionString) throws SQLException {
+
+        return DriverManager.getConnection(connectionString);
+    }
+
+    private IUnitOfWork getNewUow() {
+        return new UnitOfWork(connection);
+    }
+
+    private void setUow(IUnitOfWork uow) {
+        this.uow = uow;
+    }
+
+    private void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
 }
