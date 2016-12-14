@@ -35,8 +35,8 @@ public class TemporaryCurrencyEnumHelper {
                 enumRepo.add(enumDict);
             }
             
-            repo.save();
-            repo.close();
+            repo.saveAndClose();
+            
             
         } catch (SQLException e) {
             e.printStackTrace();

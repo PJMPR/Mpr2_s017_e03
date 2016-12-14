@@ -69,17 +69,14 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     }
 
     public IWalletRepository Wallets() {
-        if(walletRepo!=null)
-        walletRepo=new WalletRepository(connection, new WalletMapper(), uow);
+        if (walletRepo != null) {
+            walletRepo = new WalletRepository(connection, new WalletMapper(), uow);
+        }
         return walletRepo;
     }
 
-    public void save() {
+    public void saveAndClose() {
         uow.saveChanges();
-
-    }
-
-    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
