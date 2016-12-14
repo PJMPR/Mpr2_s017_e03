@@ -3,7 +3,10 @@ package web;
 import domain.model.Currency;
 import domain.model.Person;
 import domain.model.Wallet;
+
 import java.io.IOException;
+import java.math.BigDecimal;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/walletServlet")
+@WebServlet("/WalletServlet")
 public class WalletServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -30,6 +33,15 @@ public class WalletServlet extends HttpServlet {
         wallet.setPerson((Person)session.getAttribute("person"));
         
         session.setAttribute("wallet",wallet );
+        
+        if(req.getParameter("value").isEmpty())
+        {
+        	resp.sendRedirect("/addPerson.html");
+        }
+        else
+        {
+        	
+        }
         
         resp.sendRedirect("/final");
     }
