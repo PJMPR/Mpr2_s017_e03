@@ -1,14 +1,13 @@
 package domain.model;
 
 public enum Currency {
-    USD, CHF, PLN, JPN;
-    
-    public static Currency getByName(String enumName){
-    	 for (Currency cur : Currency.values()) {
-    		 if (cur.toString().equalsIgnoreCase(enumName)){
-    			 return cur;
-    		 }    	 
-    	 }
-    	 return null;
+    USD("Dolar"), CHF("Frank"), PLN("Złotówka"), JPN("Jen");
+    private String longName;
+    Currency(String longName){
+        this.longName=longName;
+    }
+    public String getLongName(){
+        return longName;
+
     }
 }
