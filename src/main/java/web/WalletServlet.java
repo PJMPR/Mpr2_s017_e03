@@ -3,7 +3,10 @@ package web;
 import domain.model.Currency;
 import domain.model.Person;
 import domain.model.Wallet;
+
 import java.io.IOException;
+import java.math.BigDecimal;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,17 +22,23 @@ public class WalletServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("currency");
-
         Integer value = Integer.parseInt(req.getParameter("value"));
-
         
         HttpSession session = req.getSession();
 
+        Person person = (Person) session.getAttribute("person");
+        if(person==null)
+        { 
+	        resp.sendRedirect("/addPerson.html");
+	        return;
+        }
+        
         Wallet wallet = new Wallet();
         wallet.setCurrency(Currency.valueOf(name));
         wallet.setPerson((Person)session.getAttribute("person"));
         
         session.setAttribute("wallet",wallet );
+        
         
         resp.sendRedirect("/final");
     }
