@@ -15,12 +15,11 @@ import javax.servlet.http.HttpSession;
 
 import domain.model.Person;
 
-@WebFilter("/addWallet.html")
+@WebFilter(urlPatterns = {"addWallet.html","final.jsp","walletServlet","walletServlet"})
 public class PersonFilter implements Filter {
 
-    public PersonFilter() {
-
-    }
+	    public PersonFilter() {
+		    }
 
 	public void destroy() {
 	}

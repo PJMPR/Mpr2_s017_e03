@@ -14,17 +14,21 @@ import domain.model.Person;
 @WebServlet("/personServlet")
 public class PersonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	protected void doGet(HttpServletRequest request, 
-			HttpServletResponse response) 
-					throws ServletException, IOException {
-		
+	    
+	protected void doGet(HttpServletRequest request, 
+						 HttpServletResponse response) 
+			throws ServletException, IOException {
+
 		Person person = new Person();
 		person.setName(request.getParameter("name"));
 		person.setSurname(request.getParameter("surname"));
 		HttpSession session = request.getSession();
-		session.setAttribute("person", person);
-		response.sendRedirect("/addWallet.html");
+		if (person==session.getAttribute("person")){
+			response.sendRedirect("/addWallet.html");
+		}
+		else{
+			session.setAttribute("person", person);
+			response.sendRedirect("/addWallet.html");
+		}
 	}
-
 }
