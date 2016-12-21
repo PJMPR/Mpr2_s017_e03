@@ -16,6 +16,8 @@ import domain.model.Currency;
 import domain.model.Person;
 import domain.model.Wallet;
 
+import java.math.BigDecimal;
+
 @WebServlet("/AddAccountServlet")
 public class AddAccountServlet extends HttpServlet {
 
@@ -23,20 +25,23 @@ public class AddAccountServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, 	HttpServletResponse resp)throws ServletException, IOException {
 			
+	
+	
     String name = req.getParameter("currency");
     BigDecimal value = new BigDecimal(req.getParameter("value"));
     HttpSession session = req.getSession();
-    Person person = (Person) session.getAttribute("person");
+	  wallet.setPerson((Person) session.getAttribute(SessionKey.person));
     Wallet wallet = new Wallet();
     wallet.setCurrency(Currency.valueOf(name));
     wallet.setAsset(value);
     wallet.setPerson(person);
 	
-	List<Wallet> wallets = (List<Wallet>) session.getAttribute("wallets");
+	List<Wallet> wallets = (List<Wallet>) session.getAttribute(SessionKey.wallets);
 	if(wallets == null)
 	{
 		wallets = new ArrayList<Wallet>();
 		wallets.add(wallet);
+		session.setAttribute(SessionKey.wallets, wallets);
 	}
 	else
 	{
@@ -46,4 +51,3 @@ public class AddAccountServlet extends HttpServlet {
 	resp.sendRedirect("/addWallet.html");
 }
 }
-

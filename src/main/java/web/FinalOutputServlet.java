@@ -3,7 +3,9 @@ package web;
 import domain.model.Currency;
 import domain.model.Person;
 import domain.model.Wallet;
+
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +24,8 @@ public class FinalOutputServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         
-        Person person = (Person) session.getAttribute("person");
-        Wallet wallet = (Wallet) session.getAttribute("wallet");
+        Person person = (Person) session.getAttribute(SessionKey.person);
+        Wallet wallet = (Wallet) session.getAttribute(SessionKey.wallets);
 
         
         resp.setContentType("text/html");
