@@ -2,6 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@page import="java.util.List" %>
+<%@page import="domain.model.EnumDictionary" %>
+<%@page import="EnumDictionary" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
@@ -16,14 +18,13 @@
                 <div>
                     Wybierz walutę</br>
                     <select name="currency">
-
                         <%
                         try {
-                           RepositoryCatalog rp = new RepositoryCatalog(CONNECTION_STRING);
+                           RepositoryCatalog rp = new RepositoryCatalog(App.CONNECTION_STRING);
                            List<EnumDictionary> currency = rp.Dictionaries().withDictionaryName("Currency");
                            for(EnumDictionary ed:currency){
-                        %><option value="<%= ed.getStringKey();%>"
-                                ><%= ed.getValue();%></option>
+                        %><option value="<%= ed.getStringKey()%>"
+                                ><%= ed.getValue()%></option>
                         <%
                            }
                         } catch (Exception e) {
