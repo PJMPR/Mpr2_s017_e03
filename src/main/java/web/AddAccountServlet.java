@@ -1,6 +1,7 @@
 package web;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +25,16 @@ public class AddAccountServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, 	HttpServletResponse resp)throws ServletException, IOException {
 			
-		
-	HttpSession session = req.getSession();
-	Wallet wallet = new Wallet();
-	wallet.setCurrency((Currency) session.getAttribute("currency"));
-	wallet.setAsset( (BigDecimal) session.getAttribute("value"));
-	wallet.setPerson((Person) session.getAttribute(SessionKey.person));
 	
 	
+    String name = req.getParameter("currency");
+    BigDecimal value = new BigDecimal(req.getParameter("value"));
+    HttpSession session = req.getSession();
+	  wallet.setPerson((Person) session.getAttribute(SessionKey.person));
+    Wallet wallet = new Wallet();
+    wallet.setCurrency(Currency.valueOf(name));
+    wallet.setAsset(value);
+    wallet.setPerson(person);
 	
 	List<Wallet> wallets = (List<Wallet>) session.getAttribute(SessionKey.wallets);
 	if(wallets == null)
@@ -44,7 +47,7 @@ public class AddAccountServlet extends HttpServlet {
 	{
 		wallets.add(wallet);
 	}
-
+	session.setAttribute("wallets", wallets);
 	resp.sendRedirect("/addWallet.html");
 }
 }
