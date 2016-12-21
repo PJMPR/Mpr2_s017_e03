@@ -22,5 +22,8 @@
 			<li><%=wallet.getAsset() %> <%=wallet.getCurrency() %></li>
 		<%} %>
 	</ol>
+	<form action="DbServlet" method="get">
+	<input type="submit" value="Wyślij">
+	</form>
 </body>
 </html>
