@@ -17,14 +17,14 @@
                     Wybierz walutę</br>
                     <select name="currency">
 
-                        <%!
+                        <%
                         try {
                            RepositoryCatalog rp = new RepositoryCatalog(CONNECTION_STRING);
                            List<EnumDictionary> currency = rp.Dictionaries().withDictionaryName("Currency");
                            for(EnumDictionary ed:currency){
-                        %><option value="<%! ed.getStringKey();%>"
-                                ><%! ed.getValue();%></option>
-                        <%!
+                        %><option value="<%= ed.getStringKey();%>"
+                                ><%= ed.getValue();%></option>
+                        <%
                            }
                         } catch (Exception e) {
                             e.printStackTrace();
