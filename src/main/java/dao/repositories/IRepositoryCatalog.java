@@ -6,4 +6,5 @@ public interface IRepositoryCatalog {
 	public IEnumDictionariesRepository Dictionaries();
 	public IHistoryRepository WallettHistory();
 	public IWalletRepository Wallets();
+	void saveAndClose();
 }
