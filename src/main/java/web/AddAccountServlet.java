@@ -23,25 +23,26 @@ public class AddAccountServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, 	HttpServletResponse resp)throws ServletException, IOException {
 			
-		
-	HttpSession session = req.getSession();
-	Wallet wallet = new Wallet();
-	wallet.setCurrency((Currency) session.getAttribute("currency"));
-    wallet.setAsset( (BigDecimal) session.getAttribute("value"));
-    wallet.setPerson((Person) session.getAttribute("person"));
+    String name = req.getParameter("currency");
+    BigDecimal value = new BigDecimal(req.getParameter("value"));
+    HttpSession session = req.getSession();
+    Person person = (Person) session.getAttribute("person");
+    Wallet wallet = new Wallet();
+    wallet.setCurrency(Currency.valueOf(name));
+    wallet.setAsset(value);
+    wallet.setPerson(person);
 	
 	List<Wallet> wallets = (List<Wallet>) session.getAttribute("wallets");
 	if(wallets == null)
 	{
 		wallets = new ArrayList<Wallet>();
 		wallets.add(wallet);
-		session.setAttribute("wallets", wallets);
 	}
 	else
 	{
 		wallets.add(wallet);
 	}
-
+	session.setAttribute("wallets", wallets);
 	resp.sendRedirect("/addWallet.html");
 }
 }
