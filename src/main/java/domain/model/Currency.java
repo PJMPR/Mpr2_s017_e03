@@ -10,6 +10,6 @@ public enum Currency {
         this.rate=rate;
     }
     public String getLongName(){
-        return longName;   
+        return longName;     
     }
 }
