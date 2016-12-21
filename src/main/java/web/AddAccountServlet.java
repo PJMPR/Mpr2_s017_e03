@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import domain.model.Currency;
+import domain.model.Person;
 import domain.model.Wallet;
+
+import java.math.BigDecimal;
 
 @WebServlet("/AddAccountServlet")
 public class AddAccountServlet extends HttpServlet {
@@ -22,14 +26,19 @@ public class AddAccountServlet extends HttpServlet {
 			
 		
 	HttpSession session = req.getSession();
-	Wallet wallet = (Wallet) session.getAttribute("wallet");
+	Wallet wallet = new Wallet();
+	wallet.setCurrency((Currency) session.getAttribute("currency"));
+	wallet.setAsset( (BigDecimal) session.getAttribute("value"));
+	wallet.setPerson((Person) session.getAttribute(SessionKey.person));
 	
-	List<Wallet> wallets = (List<Wallet>) session.getAttribute("wallets");
+	
+	
+	List<Wallet> wallets = (List<Wallet>) session.getAttribute(SessionKey.wallets);
 	if(wallets == null)
 	{
 		wallets = new ArrayList<Wallet>();
 		wallets.add(wallet);
-		session.setAttribute("wallets", wallets);
+		session.setAttribute(SessionKey.wallets, wallets);
 	}
 	else
 	{
@@ -39,4 +48,3 @@ public class AddAccountServlet extends HttpServlet {
 	resp.sendRedirect("/addWallet.html");
 }
 }
-
