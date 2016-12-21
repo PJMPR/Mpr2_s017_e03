@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class TemporaryCurrencyEnumHelper {
 
-    public static void insertCurrencyEnums() {
+    public void insertCurrencyEnums() {
         
     	RepositoryCatalog repo = null;
         try {
