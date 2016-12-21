@@ -21,22 +21,21 @@ public class PersonFilter implements Filter {
     public PersonFilter() {
     }
 
-	public void destroy() {
-	}
+    public void destroy() {
+    }
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest)request;
-		HttpSession session = req.getSession();
-		Person person = (Person) session.getAttribute("person");
-		if(person==null){
-			((HttpServletResponse) response).sendRedirect("/addPerson.html");
-		}
-		else{
-			chain.doFilter(request, response);
-		}
-	}
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpSession session = req.getSession();
+        Person person = (Person) session.getAttribute("person");
+        if (person == null) {
+            ((HttpServletResponse) response).sendRedirect("/addPerson.html");
+        } else {
+            chain.doFilter(request, response);
+        }
+    }
 
-	public void init(FilterConfig fConfig) throws ServletException {
-	}
+    public void init(FilterConfig fConfig) throws ServletException {
+    }
 
 }
