@@ -15,10 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import domain.model.Person;
 
-@WebFilter(urlPatterns = {"addWallet.html","final.jsp","walletServlet","walletServlet"})
-public class PersonFilter implements Filter {
+@WebFilter("/addWallet.html")
+public class BlokPersonFillter implements Filter {
 
-    public PersonFilter() {
+    public BlokPersonFillter() {
     }
 
 	public void destroy() {
@@ -33,6 +33,12 @@ public class PersonFilter implements Filter {
 		}
 		else{
 			chain.doFilter(request, response);
+		}
+		if(person==session.getAttribute("person")){
+			;
+		}
+		else{
+			
 		}
 	}
 
