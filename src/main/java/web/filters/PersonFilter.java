@@ -19,6 +19,7 @@ import domain.model.Person;
 public class PersonFilter implements Filter {
 
     public PersonFilter() {
+
     }
 
 	public void destroy() {
