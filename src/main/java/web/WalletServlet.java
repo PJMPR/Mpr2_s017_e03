@@ -34,21 +34,18 @@ public class WalletServlet extends HttpServlet{
         Wallet wallet = new Wallet();
         wallet.setCurrency(Currency.valueOf(name));
         wallet.setAsset(value);
-        List<Wallet> wallets = new ArrayList<Wallet>();
-        wallets.add(wallet);
-        session.setAttribute(SessionKey.wallets,wallets);
         wallet.setPerson(person);
         List<Wallet> wallets = (List<Wallet>) session.getAttribute("wallets");
     	if(wallets == null)
     	{
             wallets = new ArrayList<Wallet>();
             wallets.add(wallet);
+            session.setAttribute(SessionKey.wallets,wallets);
     	}
     	else 
     	{
     		wallets.add(wallet);
     	}
-        session.setAttribute("wallets",wallets);
         resp.sendRedirect("/final.jsp");
     }
 }
