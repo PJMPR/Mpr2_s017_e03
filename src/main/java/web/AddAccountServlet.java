@@ -20,29 +20,22 @@ public class AddAccountServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, 	HttpServletResponse resp)throws ServletException, IOException {
 			
-	//List<Wallet> wallets = new ArrayList<Wallet>();
-	
-	/*
-	 * 1. ///////////utworzyc walleta z requesta
-	 * 2. sprawdzic czy w sesji jest lista
-	 * 3. jesli nie to utworzyc w sesji liste
-	 * 4. dodac walleta do listy
-	 * 5. redirect
-	 * */
-	
+		
 	HttpSession session = req.getSession();
 	Wallet wallet = (Wallet) session.getAttribute("wallet");
 	
-	List<Wallet> wallets = (List<Wallet>) session.getAttribute("list");
+	List<Wallet> wallets = (List<Wallet>) session.getAttribute("wallets");
 	if(wallets == null)
 	{
 		wallets = new ArrayList<Wallet>();
 		wallets.add(wallet);
+		session.setAttribute("wallets", wallets);
 	}
 	else
 	{
 		wallets.add(wallet);
 	}
+
 	resp.sendRedirect("/addWallet.html");
 }
 }
