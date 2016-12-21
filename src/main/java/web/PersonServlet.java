@@ -14,11 +14,11 @@ import domain.model.Person;
 @WebServlet("/personServlet")
 public class PersonServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	protected void doGet(HttpServletRequest request, 
-			HttpServletResponse response) 
-					throws ServletException, IOException {
-		
+	    
+	protected void doGet(HttpServletRequest request, 
+						 HttpServletResponse response) 
+			throws ServletException, IOException {
+
 		Person person = new Person();
 		person.setName(request.getParameter("name"));
 		person.setSurname(request.getParameter("surname"));
@@ -27,5 +27,4 @@ public class PersonServlet extends HttpServlet {
 		response.sendRedirect("/addWallet.html");
 		
 	}
-
 }

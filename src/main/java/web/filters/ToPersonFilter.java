@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import web.SessionKey;
 import domain.model.Person;
 
-@WebFilter(urlPatterns = {"addWallet.html","final.jsp","walletServlet","walletServlet"})
+@WebFilter("/addWallet.html")
 public class PersonFilter implements Filter {
 
-	    public PersonFilter() {
-		    }
+    public PersonFilter() {
+
+    }
 
 	public void destroy() {
 	}
@@ -28,7 +28,7 @@ public class PersonFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpSession session = req.getSession();
-		Person person = (Person) session.getAttribute(SessionKey.person);
+		Person person = (Person) session.getAttribute("person");
 		if(person==null){
 			((HttpServletResponse) response).sendRedirect("/addPerson.html");
 		}
