@@ -30,7 +30,7 @@ public class AddAccountServlet extends HttpServlet {
     String name = req.getParameter("currency");
     BigDecimal value = new BigDecimal(req.getParameter("value"));
     HttpSession session = req.getSession();
-	  wallet.setPerson((Person) session.getAttribute(SessionKey.person));
+	Person person = (Person) session.getAttribute(SessionKey.person);
     Wallet wallet = new Wallet();
     wallet.setCurrency(Currency.valueOf(name));
     wallet.setAsset(value);
@@ -47,7 +47,6 @@ public class AddAccountServlet extends HttpServlet {
 	{
 		wallets.add(wallet);
 	}
-	session.setAttribute("wallets", wallets);
 	resp.sendRedirect("/addWallet.html");
 }
 }
