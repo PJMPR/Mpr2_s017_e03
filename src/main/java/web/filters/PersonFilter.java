@@ -1,24 +1,24 @@
 package web.filters;
 
-import java.io.IOException;
+		import java.io.IOException;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+		import javax.servlet.Filter;
+		import javax.servlet.FilterChain;
+		import javax.servlet.FilterConfig;
+		import javax.servlet.ServletException;
+		import javax.servlet.ServletRequest;
+		import javax.servlet.ServletResponse;
+		import javax.servlet.annotation.WebFilter;
+		import javax.servlet.http.HttpServletRequest;
+		import javax.servlet.http.HttpServletResponse;
+		import javax.servlet.http.HttpSession;
 
-import domain.model.Person;
+		import domain.model.Person;
 
-@WebFilter(urlPatterns = {"addWallet.html","final.jsp","walletServlet","walletServlet"})
-public class PersonFilter implements Filter {
+@WebFilter("/addPerson.html")
+public class BlockPersonFillter implements Filter {
 
-	    public PersonFilter() {
+	    public BlockPersonFillter() {
 		    }
 
 	public void destroy() {
@@ -32,6 +32,7 @@ public class PersonFilter implements Filter {
 			((HttpServletResponse) response).sendRedirect("/addPerson.html");
 		}
 		else{
+			((HttpServletResponse) response).sendRedirect("/addWallet.html");
 			chain.doFilter(request, response);
 		}
 	}
