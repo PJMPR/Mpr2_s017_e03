@@ -8,6 +8,7 @@ package web.filters;
 import domain.model.Wallet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -19,6 +20,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import web.SessionKey;
 
 @WebFilter("/filter.jsp")
 public class TestFinalOutputServlet implements Filter{
@@ -32,13 +35,12 @@ public class TestFinalOutputServlet implements Filter{
                 HttpServletResponse resp = (HttpServletResponse)response;
 		HttpSession session = req.getSession();
 
-		Wallet name = (Wallet) session.getAttribute("wallet");
-		if(name!=null){
-                    return;
-		}
-		else{
-			resp.sendRedirect("addWallet.html");
-		}
+		ArrayList<Wallet> wallets = (ArrayList<Wallet>) session.getAttribute(SessionKey.wallets);
+        if (wallets != null && wallets.size() > 0) {
+            chain.doFilter(request, response);
+        } else {
+            resp.sendRedirect("addWallet.html");
+        }
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

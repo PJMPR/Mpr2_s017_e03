@@ -1,6 +1,7 @@
 package web;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import domain.model.Currency;
+import domain.model.Person;
 import domain.model.Wallet;
+
+import java.math.BigDecimal;
 
 @WebServlet("/AddAccountServlet")
 public class AddAccountServlet extends HttpServlet {
@@ -20,24 +25,23 @@ public class AddAccountServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, 	HttpServletResponse resp)throws ServletException, IOException {
 			
-	//List<Wallet> wallets = new ArrayList<Wallet>();
 	
-	/*
-	 * 1. ///////////utworzyc walleta z requesta
-	 * 2. sprawdzic czy w sesji jest lista
-	 * 3. jesli nie to utworzyc w sesji liste
-	 * 4. dodac walleta do listy
-	 * 5. redirect
-	 * */
 	
-	HttpSession session = req.getSession();
-	Wallet wallet = (Wallet) session.getAttribute("wallet");
+    String name = req.getParameter("currency");
+    BigDecimal value = new BigDecimal(req.getParameter("value"));
+    HttpSession session = req.getSession();
+	Person person = (Person) session.getAttribute(SessionKey.person);
+    Wallet wallet = new Wallet();
+    wallet.setCurrency(Currency.valueOf(name));
+    wallet.setAsset(value);
+    wallet.setPerson(person);
 	
-	List<Wallet> wallets = (List<Wallet>) session.getAttribute("list");
+	List<Wallet> wallets = (List<Wallet>) session.getAttribute(SessionKey.wallets);
 	if(wallets == null)
 	{
 		wallets = new ArrayList<Wallet>();
 		wallets.add(wallet);
+		session.setAttribute(SessionKey.wallets, wallets);
 	}
 	else
 	{
@@ -46,4 +50,3 @@ public class AddAccountServlet extends HttpServlet {
 	resp.sendRedirect("/addWallet.html");
 }
 }
-

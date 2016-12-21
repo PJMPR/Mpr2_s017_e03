@@ -13,7 +13,8 @@ package web.filters;
 		import javax.servlet.http.HttpServletResponse;
 		import javax.servlet.http.HttpSession;
 
-		import domain.model.Person;
+
+
 
 @WebFilter("/addPerson.html")
 public class BlockPersonFillter implements Filter {
@@ -27,7 +28,7 @@ public class BlockPersonFillter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpSession session = req.getSession();
-		Person person = (Person) session.getAttribute("person");
+		Person person = (Person) session.getAttribute(SessionKey.person);
 		if(person==null){
 			((HttpServletResponse) response).sendRedirect("/addPerson.html");
 		}

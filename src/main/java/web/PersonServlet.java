@@ -23,12 +23,8 @@ public class PersonServlet extends HttpServlet {
 		person.setName(request.getParameter("name"));
 		person.setSurname(request.getParameter("surname"));
 		HttpSession session = request.getSession();
-		if (person==session.getAttribute("person")){
-			response.sendRedirect("/addWallet.html");
-		}
-		else{
-			session.setAttribute("person", person);
-			response.sendRedirect("/addWallet.html");
-		}
+		session.setAttribute(SessionKey.person, person);
+		response.sendRedirect("/addWallet.html");
+		
 	}
 }

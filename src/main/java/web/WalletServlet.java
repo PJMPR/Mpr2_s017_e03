@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet("/walletServlet")
-public class WalletServlet extends HttpServlet {
+public class WalletServlet extends HttpServlet{
 
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class WalletServlet extends HttpServlet {
         String name = req.getParameter("currency");
         BigDecimal value = new BigDecimal(req.getParameter("value"));
         HttpSession session = req.getSession();
-        Person person = (Person) session.getAttribute("person");
+        Person person = (Person) session.getAttribute(SessionKey.person);
         if(person==null)
         { 
 	        resp.sendRedirect("/addPerson.html");
@@ -34,11 +34,18 @@ public class WalletServlet extends HttpServlet {
         Wallet wallet = new Wallet();
         wallet.setCurrency(Currency.valueOf(name));
         wallet.setAsset(value);
-        wallet.setPerson((Person)session.getAttribute("person"));
-        List<Wallet> wallets = new ArrayList<Wallet>();
-        wallets.add(wallet);
-        session.setAttribute("wallets",wallets);
+        wallet.setPerson(person);
+        List<Wallet> wallets = (List<Wallet>) session.getAttribute("wallets");
+    	if(wallets == null)
+    	{
+            wallets = new ArrayList<Wallet>();
+            wallets.add(wallet);
+            session.setAttribute(SessionKey.wallets,wallets);
+    	}
+    	else 
+    	{
+    		wallets.add(wallet);
+    	}
         resp.sendRedirect("/final.jsp");
     }
-
 }
