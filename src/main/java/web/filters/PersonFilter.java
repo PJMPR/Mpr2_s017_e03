@@ -19,8 +19,8 @@ import domain.model.Person;
 @WebFilter(urlPatterns = {"addWallet.html","final.jsp","walletServlet","walletServlet"})
 public class PersonFilter implements Filter {
 
-	    public PersonFilter() {
-		    }
+	 public PersonFilter() {
+		 }
 
 	public void destroy() {
 	}
