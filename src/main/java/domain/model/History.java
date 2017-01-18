@@ -5,18 +5,29 @@
  */
 package domain.model;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.Date;
 
 /**
- *
  * @author mati
  */
-public class History implements IHaveId{
-    
+@XmlRootElement
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "walletTo.id", query = "SELECT h from History h where h.toWalletId.id = Wallet .id"),
+        @NamedQuery(name= "walletFrom.id", query = "SELECT h from History h where h.fromWalletId.id = Wallet .id")
+})
+public class History implements IHaveId {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date date;
     private Double amount;
+    @OneToOne
     private Wallet From;
+    @OneToOne
     private Wallet To;
     private Double rate;
 
@@ -32,11 +43,13 @@ public class History implements IHaveId{
     public void setAmount(Double amount) {
         this.amount = amount;
     }
+
     public void setRate(Double rate) {
         this.rate = rate;
     }
 
     public History(Integer id, Date date, Integer operationId, Double amount, Integer fromWalletId, Integer toWalletId, Double rate) {
+
         this.id = id;
         this.date = date;
         this.amount = amount;
@@ -44,7 +57,15 @@ public class History implements IHaveId{
     }
 
     public History() {
-        
+
+    }
+
+    public Wallet getFromWalletId() {
+        return fromWalletId;
+    }
+
+    public Wallet getToWalletId() {
+        return toWalletId;
     }
 
     public int getId() {
@@ -56,6 +77,7 @@ public class History implements IHaveId{
     }
 
     public Double getAmount() {
+
         return amount;
     }
 
@@ -63,7 +85,6 @@ public class History implements IHaveId{
     public Double getRate() {
         return rate;
     }
-
 	public Wallet getFrom() {
 		return From;
 	}
@@ -79,9 +100,4 @@ public class History implements IHaveId{
 	public void setTo(Wallet to) {
 		To = to;
 	}
-    
-
-    
-    
-    
 }
