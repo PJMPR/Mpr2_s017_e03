@@ -1,6 +1,7 @@
 package web;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,8 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.RepositoryCatalog;
 import dao.repositories.IRepositoryCatalog;
-import dao.uow.IUnitOfWork;
-import dao.uow.UnitOfWork;
+import domain.model.History;
 import domain.model.Person;
 import domain.model.Wallet;
 
@@ -41,6 +41,15 @@ public class DbServlet extends HttpServlet {
 			for(Wallet wallet: wallets){
 				wallet.setPerson(person);
 				catalog.Wallets().add(wallet);
+				catalog.save();
+				wallet.setId(catalog.Wallets().getLastId());
+				History log = new History();
+				log.setAmount((double)wallet.getAsset().floatValue());
+				log.setDate(new Date(new java.util.Date().getTime()));
+				log.setRate(1.0);
+				log.setFrom(wallet);
+				log.setTo(wallet);
+				catalog.WallettHistory().add(log);
 			}
 			catalog.saveAndClose();
 			session.removeAttribute("person");

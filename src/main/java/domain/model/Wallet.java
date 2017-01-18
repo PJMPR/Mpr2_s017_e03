@@ -23,6 +23,7 @@ public class Wallet implements IHaveId{
     private int id;
     private Currency currency;
     private BigDecimal asset;
+
     @ManyToOne
     private Person person;
 

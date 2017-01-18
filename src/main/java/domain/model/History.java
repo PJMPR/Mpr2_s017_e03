@@ -24,11 +24,11 @@ public class History implements IHaveId {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date date;
-    private Float amount;
+    private Double amount;
     @OneToOne
-    private Wallet fromWalletId;
+    private Wallet From;
     @OneToOne
-    private Wallet toWalletId;
+    private Wallet To;
     private Double rate;
 
     public void setId(Integer id) {
@@ -40,28 +40,19 @@ public class History implements IHaveId {
     }
 
 
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
-    }
-
-    public void setFromWalletId(Wallet fromWalletId) {
-        this.fromWalletId = fromWalletId;
-    }
-
-    public void setToWalletId(Wallet toWalletId) {
-        this.toWalletId = toWalletId;
     }
 
     public void setRate(Double rate) {
         this.rate = rate;
     }
 
-    public History(Integer id, Date date, Float amount, Wallet fromWalletId, Wallet toWalletId, Double rate) {
+    public History(Integer id, Date date, Integer operationId, Double amount, Integer fromWalletId, Integer toWalletId, Double rate) {
+
         this.id = id;
         this.date = date;
         this.amount = amount;
-        this.fromWalletId = fromWalletId;
-        this.toWalletId = toWalletId;
         this.rate = rate;
     }
 
@@ -85,8 +76,8 @@ public class History implements IHaveId {
         return date;
     }
 
+    public Double getAmount() {
 
-    public Float getAmount() {
         return amount;
     }
 
@@ -94,6 +85,19 @@ public class History implements IHaveId {
     public Double getRate() {
         return rate;
     }
+	public Wallet getFrom() {
+		return From;
+	}
 
+	public void setFrom(Wallet from) {
+		From = from;
+	}
 
+	public Wallet getTo() {
+		return To;
+	}
+
+	public void setTo(Wallet to) {
+		To = to;
+	}
 }
