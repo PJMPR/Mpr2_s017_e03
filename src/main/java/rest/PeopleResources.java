@@ -8,6 +8,8 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +25,17 @@ public class PeopleResources {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Person> getAll(){
-        return entityManager.createNamedQuery("person.all",Person.class).getResultList();
+    	List<Person> result = new ArrayList<Person>();
+        System.out.println("zaczynam pobierac dane");
+    	for(Person p: entityManager.createNamedQuery("person.all",Person.class).getResultList()){
+        	
+        	result.add(p);
+
+            System.out.println("zapisuje osobe "+ p.getName());
+        }
+
+        System.out.println("koncze");
+        return result;
     }
 
     @POST
