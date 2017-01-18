@@ -14,10 +14,10 @@ import java.sql.Date;
  */
 @XmlRootElement
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "walletTo.id", query = "SELECT h from History h where h.toWalletId.id = Wallet .id"),
-        @NamedQuery(name= "walletFrom.id", query = "SELECT h from History h where h.fromWalletId.id = Wallet .id")
-})
+//@NamedQueries({
+//        @NamedQuery(name = "walletTo.id", query = "from History h where h.to.id =:to_id")
+        //@NamedQuery(name= "walletFrom.id", query = "from History h where h.from.id =:from_id")
+//})
 public class History implements IHaveId {
 
     @Id
@@ -58,14 +58,6 @@ public class History implements IHaveId {
 
     public History() {
 
-    }
-
-    public Wallet getFromWalletId() {
-        return fromWalletId;
-    }
-
-    public Wallet getToWalletId() {
-        return toWalletId;
     }
 
     public int getId() {
