@@ -17,6 +17,9 @@ import java.sql.Date;
 //@NamedQueries({
 //        @NamedQuery(name = "walletTo.id", query = "from History h where h.to.id =:to_id")
         //@NamedQuery(name= "walletFrom.id", query = "from History h where h.from.id =:from_id")
+@NamedQueries({
+        @NamedQuery(name = "dateFrom", query = "Select h from History h where h.date =:dateFrom"),
+        @NamedQuery(name = "dateBetween", query = "SELECT h from History h where h.date between :dateFrom AND :dateTo")})
 //})
 public class History implements IHaveId {
 
