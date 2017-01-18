@@ -1,7 +1,11 @@
 package domain.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 @Entity
@@ -16,8 +20,19 @@ public class Person implements IHaveId {
     private int id;
     private String name;
     private String surname;
+    private List<Wallet> wallets = new ArrayList<Wallet>();
 
-    public int getId() {
+    @XmlTransient
+    @OneToMany(mappedBy="person")
+    public List<Wallet> getWallets() {
+		return wallets;
+	}
+
+	public void setWallets(List<Wallet> wallets) {
+		this.wallets = wallets;
+	}
+
+	public int getId() {
         return id;
     }
 
