@@ -28,7 +28,7 @@ public class TemporaryCurrencyEnumHelper {
                 //enumDict.setId(i);
                 enumDict.setEnumerationName("Currency");
                 enumDict.setValue(Currency.values()[i].getLongName());
-                enumDict.setIntKey(i);
+                enumDict.setIntKey(Currency.values()[i].getIntKey());
                 enumDict.setStringKey(Currency.values()[i].toString());
                 enumRepo.add(enumDict);
             }
@@ -36,7 +36,7 @@ public class TemporaryCurrencyEnumHelper {
             repo.saveAndClose();
             
             
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

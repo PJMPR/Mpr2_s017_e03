@@ -29,7 +29,7 @@ public class WalletServlet extends HttpServlet{
         Person person = (Person) session.getAttribute(SessionKey.person);
         if(person==null)
         { 
-	        resp.sendRedirect("/addPerson.html");
+	        resp.sendRedirect("addPerson.html");
         }
         Wallet wallet = new Wallet();
         wallet.setCurrency(Currency.valueOf(name));
@@ -46,6 +46,6 @@ public class WalletServlet extends HttpServlet{
     	{
     		wallets.add(wallet);
     	}
-        resp.sendRedirect("/final.jsp");
+        resp.sendRedirect("final.jsp");
     }
 }

@@ -22,8 +22,9 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     private PersonRepository personRepo;
     private WalletRepository walletRepo;
 
-    public RepositoryCatalog(String connectionString) throws SQLException {
+    public RepositoryCatalog(String connectionString) throws SQLException, ClassNotFoundException {
 
+		Class.forName("org.hsqldb.jdbcDriver");
         setConnection(getNewConnection(connectionString));
         setUow(getNewUow());
 
@@ -52,7 +53,7 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     }
 
     public IWalletRepository Wallets() {
-        if (walletRepo != null) {
+        if (walletRepo == null) {
             walletRepo = new WalletRepository(connection, new WalletMapper(), uow);
         }
         return walletRepo;
@@ -83,5 +84,10 @@ public class RepositoryCatalog implements IRepositoryCatalog {
     private void setConnection(Connection connection) {
         this.connection = connection;
     }
+
+	public void save() {
+        uow.saveChanges();
+		
+	}
 
 }

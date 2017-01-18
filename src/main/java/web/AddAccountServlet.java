@@ -47,6 +47,6 @@ public class AddAccountServlet extends HttpServlet {
 	{
 		wallets.add(wallet);
 	}
-	resp.sendRedirect("/addWallet.html");
+	resp.sendRedirect("addWallet.html");
 }
 }
