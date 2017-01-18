@@ -35,11 +35,18 @@ public class DbServlet extends HttpServlet {
 			Person person = (Person) session.getAttribute("person");
 			List<Wallet> wallets = (List<Wallet>) session.getAttribute("wallets");
 			catalog.People().add(person);
+			catalog.save();
+			int personId = catalog.People().getLastId();
+			person.setId(personId);
 			for(Wallet wallet: wallets){
+				wallet.setPerson(person);
 				catalog.Wallets().add(wallet);
 			}
 			catalog.saveAndClose();
-		} catch (SQLException e) {
+			session.removeAttribute("person");
+			session.removeAttribute("wallets");
+			response.sendRedirect("index.html");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}		
 	}

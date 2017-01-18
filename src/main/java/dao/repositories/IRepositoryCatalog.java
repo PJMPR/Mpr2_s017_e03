@@ -7,4 +7,5 @@ public interface IRepositoryCatalog {
 	public IHistoryRepository WallettHistory();
 	public IWalletRepository Wallets();
 	void saveAndClose();
+	void save();
 }

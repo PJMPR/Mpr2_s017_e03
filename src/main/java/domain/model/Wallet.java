@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 public class Wallet implements IHaveId{
 
     private int id;
-    private int accountID;
     private Currency currency;
     private BigDecimal asset;
     private Person person;
@@ -18,15 +17,7 @@ public class Wallet implements IHaveId{
     public void setId(int id) {
         this.id = id;
     }
-
-    public int getAccountID() {
-        return accountID;
-    }
-
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
-    }
-
+    
     public Currency getCurrency() {
         return currency;
     }
