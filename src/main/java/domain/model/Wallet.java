@@ -15,6 +15,7 @@ public class Wallet implements IHaveId{
     private int id;
     private Currency currency;
     private BigDecimal asset;
+    
     private Person person;
 
     public int getId() {

@@ -15,10 +15,9 @@ public class History implements IHaveId{
     
     private Integer id;
     private Date date;
-    private Integer operationId;
-    private Float amount;
-    private Integer fromWalletId;
-    private Integer toWalletId;
+    private Double amount;
+    private Wallet From;
+    private Wallet To;
     private Double rate;
 
     public void setId(Integer id) {
@@ -29,33 +28,18 @@ public class History implements IHaveId{
         this.date = date;
     }
 
-    public void setOperationId(Integer operationId) {
-        this.operationId = operationId;
-    }
 
-    public void setAmount(Float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
-
-    public void setFromWalletId(Integer fromWalletId) {
-        this.fromWalletId = fromWalletId;
-    }
-
-    public void setToWalletId(Integer toWalletId) {
-        this.toWalletId = toWalletId;
-    }
-
     public void setRate(Double rate) {
         this.rate = rate;
     }
 
-    public History(Integer id, Date date, Integer operationId, Float amount, Integer fromWalletId, Integer toWalletId, Double rate) {
+    public History(Integer id, Date date, Integer operationId, Double amount, Integer fromWalletId, Integer toWalletId, Double rate) {
         this.id = id;
         this.date = date;
-        this.operationId = operationId;
         this.amount = amount;
-        this.fromWalletId = fromWalletId;
-        this.toWalletId = toWalletId;
         this.rate = rate;
     }
 
@@ -71,25 +55,30 @@ public class History implements IHaveId{
         return date;
     }
 
-    public Integer getOperationId() {
-        return operationId;
-    }
-
-    public Float getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public Integer getFromWalletId() {
-        return fromWalletId;
-    }
-
-    public Integer getToWalletId() {
-        return toWalletId;
-    }
 
     public Double getRate() {
         return rate;
     }
+
+	public Wallet getFrom() {
+		return From;
+	}
+
+	public void setFrom(Wallet from) {
+		From = from;
+	}
+
+	public Wallet getTo() {
+		return To;
+	}
+
+	public void setTo(Wallet to) {
+		To = to;
+	}
     
 
     

@@ -29,12 +29,10 @@ implements IHistoryRepository{
                 + "date DATE,"
                 + "amount DECIMAL,"
                 + "rate DOUBLE,"
-                + "WALLET_FROM_ID int,"
-                + "WALLTET_TO_ID int,"
-                + "OPERATION_ID int,"
-                + "FOREIGN KEY (WALLET_FROM_ID) REFERENCES wallet(id),"
-                + "FOREIGN KEY (WALLTET_TO_ID) REFERENCES wallet(id),"
-                + "FOREIGN KEY (OPERATION_ID) REFERENCES operations(id)"
+                + "FROM_ID int,"
+                + "TO_ID int,"
+                + "FOREIGN KEY (FROM_ID) REFERENCES wallet(id),"
+                + "FOREIGN KEY (TO_ID) REFERENCES wallet(id)"
                 + ")";
     }
 
@@ -47,26 +45,32 @@ implements IHistoryRepository{
     @Override
     protected String insertSql() {
         return "INSERT INTO history("
-                + "date, amount, rate,"
-                + " WALLET_FROM_ID,"
-                + " WALLTET_TO_ID,"
-                + "OPERATION_ID"
-                + ") VALUES (?,?,?,?,?,?)";
+                + "date, "
+                + "amount, "
+                + "rate,"
+                + " FROM_ID,"
+                + " TO_ID"
+                + ") VALUES (?,?,?,?,?)";
     }
 
     @Override
     protected String updateSql() {
-        return "UPDATE HISTORY SET (date, amount, rate, WALLET_FROM_ID" +
-                ", WALLET_TO_ID, OPERATION_ID)= (?,?,?,?,?,?) WHERE id = ?";
+        return "UPDATE HISTORY SET ("
+        		+ "date, "
+        		+ "amount, "
+        		+ "rate, "
+        		+ "FROM_ID" +
+                ", TO_ID )= (?,?,?,?,?) WHERE id = ?";
     }
 
     @Override
     protected void setUpdate(History history) throws SQLException {
         update.setDate(1, history.getDate());
-        update.setFloat(2, history.getAmount());
+        update.setDouble(2, history.getAmount());
         update.setDouble(3, history.getRate());
-        update.setInt(4, history.getFromWalletId());
-        update.setInt(5, history.getToWalletId());
+        update.setInt(4, history.getFrom().getId());
+        update.setInt(5, history.getTo().getId());
+        update.setInt(6, history.getId());
 
     }
 
@@ -75,8 +79,8 @@ implements IHistoryRepository{
         insert.setDate(1, history.getDate());
         insert.setDouble(2, history.getAmount());
         insert.setDouble(3, history.getRate());
-        insert.setInt(4, history.getFromWalletId());
-        insert.setInt(5, history.getToWalletId());
+        insert.setInt(4, history.getFrom().getId());
+        insert.setInt(5, history.getTo().getId());
     }
 
 	public List<History> of(Wallet wallet) {
