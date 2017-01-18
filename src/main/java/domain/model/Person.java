@@ -1,7 +1,18 @@
 package domain.model;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@Entity
+@NamedQueries({
+       @NamedQuery(name = "person.all", query = "SELECT p FROM Person p"),
+        @NamedQuery(name = "person.id", query = "FROM Person p WHERE p.id=:personId")
+})
 public class Person implements IHaveId {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String surname;

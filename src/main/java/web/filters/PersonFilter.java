@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import web.SessionKey;
 import domain.model.Person;
 
-@WebFilter(urlPatterns = {"addWallet.html","final.jsp","walletServlet","walletServlet"})
+@WebFilter(urlPatterns = {"/addWallet.html","/final.jsp","/walletServlet","/walletServlet"})
 public class PersonFilter implements Filter {
 
 	 public PersonFilter() {
