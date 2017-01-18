@@ -24,7 +24,7 @@ public class WalletResources {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") int id){
 		Wallet result = entityManager.createNamedQuery("wallet.id", Wallet.class)
-				.setParameter("walletId", id)
+				.setParameter("id", id)
 				.getSingleResult();
 		if(result==null){
 			return Response.status(404).build();

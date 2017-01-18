@@ -9,8 +9,9 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 @Entity
+@Table(name="people")
 @NamedQueries({
-       @NamedQuery(name = "person.all", query = "FROM Person p"),
+       @NamedQuery(name = "person.all", query = "SELECT p FROM Person p"),
         @NamedQuery(name = "person.id", query = "FROM Person p WHERE p.id=:id")
 })
 public class Person implements IHaveId {
@@ -20,9 +21,10 @@ public class Person implements IHaveId {
     private int id;
     private String name;
     private String surname;
+
+    @OneToMany(mappedBy="person", fetch = FetchType.LAZY)
     private List<Wallet> wallets = new ArrayList<Wallet>();
 
-    @OneToMany(mappedBy="person")
     public List<Wallet> getWallets() {
 		return wallets;
 	}
