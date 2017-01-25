@@ -9,8 +9,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
+@NamedQueries({
+	@NamedQuery(name = "enumDictionary.all", query = "SELECT e FROM EnumDictionary e"),
+	@NamedQuery(name = "enumDictionary.enumerationName", query = "SELECT e FROM EnumDictionary e where e.enumerationName=:name")
+	
+})
 public class EnumDictionary implements IHaveId {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
