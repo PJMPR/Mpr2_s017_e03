@@ -7,13 +7,15 @@ package domain.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import java.sql.Date;
 
-/**
- * @author mati
- */
-@XmlRootElement
+
 @Entity
+@Table(name="history")
+@NamedQueries({
+       @NamedQuery(name = "history.all", query = "SELECT h FROM History h")
+})
 public class History implements IHaveId {
 
     @Id
