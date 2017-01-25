@@ -9,6 +9,11 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
+
+import rest.dto.PersonDto;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,25 +24,26 @@ import java.util.List;
 @Stateless
 public class PeopleResources {
 
+
+	Mapper mapper = new DozerBeanMapper();
+	
     @PersistenceContext
     EntityManager entityManager;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Person> getAll(){
-    	List<Person> result = new ArrayList<Person>();
+    public List<PersonDto> getAll(){
+    	List<PersonDto> result = new ArrayList<PersonDto>();
         System.out.println("zaczynam pobierac dane");
     	for(Person p: entityManager.createNamedQuery("person.all",Person.class).getResultList()){
-        	
-        	result.add(p);
-
-            System.out.println("zapisuje osobe "+ p.getName());
+        	result.add(mapper.map(p, PersonDto.class));
         }
 
         System.out.println("koncze");
         return result;
     }
 
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response Add(Person person) {

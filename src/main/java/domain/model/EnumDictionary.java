@@ -9,11 +9,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
-@NamedQueries({
-	@NamedQuery(name = "enumDictionary.all", query = "SFROM EnumDictionary e"),
-	@NamedQuery(name = "enumDictionary.enumerationName", query = "FROM EnumDictionary e where e.enumerationName"),
-
-})
 public class EnumDictionary implements IHaveId {
 
 	@Id
