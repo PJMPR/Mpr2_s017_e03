@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -17,7 +18,6 @@ import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 
 import rest.dto.EnumDictionaryDto;
-import domain.model.EnumDictionary;
 
 @Path("/enumDictionary")
 @Stateless
@@ -30,12 +30,12 @@ public class EnumResources {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<EnumDictionaryDto> getAll(){
+    public Response getAll(){
     	List<EnumDictionaryDto> result = new ArrayList<EnumDictionaryDto>();
     	for(EnumDictionaryDto ed: em.createNamedQuery("enumDictionary.all",EnumDictionaryDto.class).getResultList()){
     		result.add(mapper.map(ed, EnumDictionaryDto.class));
     	}
-    	return result;
+    	return Response.ok(new GenericEntity<List<EnumDictionaryDto>>(result){}).build();
     }
     
     @GET
