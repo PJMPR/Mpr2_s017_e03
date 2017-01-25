@@ -14,7 +14,6 @@ public class WalletDto {
     private int id;
     private Currency currency;
     private BigDecimal asset;
-    private Person person;
 
     public int getId() {
         return id;
@@ -40,11 +39,4 @@ public class WalletDto {
         this.asset = asset;
     }
 
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 }
