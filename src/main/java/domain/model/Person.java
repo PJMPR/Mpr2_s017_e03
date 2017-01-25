@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name="people")
 @NamedQueries({
        @NamedQuery(name = "person.all", query = "SELECT p FROM Person p"),
-        @NamedQuery(name = "person.id", query = "FROM Person p WHERE p.id=:id")
+        @NamedQuery(name = "person.id", query = "SELECT p FROM Person p WHERE p.id=:id")
 })
 public class Person implements IHaveId {
 
