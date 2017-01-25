@@ -20,10 +20,9 @@ import java.util.List;
 /**
  * @author L on 18.01.2017.
  */
-@Path("/people")
+@Path("people")
 @Stateless
 public class PeopleResources {
-
 
 	Mapper mapper = new DozerBeanMapper();
 	
