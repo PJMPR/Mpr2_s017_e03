@@ -25,40 +25,31 @@ public class HistoryResources {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFrom(@PathParam("id") int id, @QueryParam("timeFrom") String timeFrom) throws ParseException {
+    public Response get() throws ParseException {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        Date dateObj = sdf.parse(timeFrom);
-        List<History> result = entityManager.createNamedQuery("dateFrom", History.class)
-                .setParameter("walletFrom.id", id)
-                .setParameter("dateFrom", dateObj)
-                .getResultList();
-        if (result == null) {
-            return Response.status(404).build();
-        }
-        return Response.ok(result).build();
+       
+        return Response.ok().build();
 
     }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getFromAndTo(@PathParam("id") int id, @QueryParam("dateFrom") String timeFrom
-            , @QueryParam("dateTo") String timeTo) throws ParseException {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateObj = sdf.parse(timeFrom);
-        Date dateObj2 = sdf.parse(timeTo);
-
-        List<History> result = entityManager.createNamedQuery("dateBetween", History.class)
-                .setParameter("walletFrom.id", id)
-                .setParameter("dateFrom", dateObj)
-                .setParameter("dateTo", dateObj2)
-                .getResultList();
-
-        if (result == null) {
-            return Response.status(404).build();
-        }
-        return Response.ok(result).build();
-    }
+//
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response getFromAndTo(@PathParam("id") int id, @QueryParam("dateFrom") String timeFrom
+//            , @QueryParam("dateTo") String timeTo) throws ParseException {
+//
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date dateObj = sdf.parse(timeFrom);
+//        Date dateObj2 = sdf.parse(timeTo);
+//
+//        List<History> result = entityManager.createNamedQuery("dateBetween", History.class)
+//                .setParameter("walletFrom.id", id)
+//                .setParameter("dateFrom", dateObj)
+//                .setParameter("dateTo", dateObj2)
+//                .getResultList();
+//
+//        if (result == null) {
+//            return Response.status(404).build();
+//        }
+//        return Response.ok(result).build();
+//    }
 }
