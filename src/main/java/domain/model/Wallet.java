@@ -17,8 +17,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Entity
 @NamedQueries({
-	@NamedQuery(name="wallet.id", query="FROM Wallet w WHERE w.id=:id"),
-	@NamedQuery(name="wallet.person_id", query="FROM Wallet w WHERE w.person.id=:person_Id")
+	@NamedQuery(name="wallet.id", query="Select w FROM Wallet w WHERE w.id=:id"),
+	@NamedQuery(name="wallet.person_id", query="select w FROM Wallet w WHERE w.person.id=:person_Id"),
+        @NamedQuery(name="wallet.all", query = "select w from Wallet w")
 })
 public class Wallet implements IHaveId{
 	@Id
