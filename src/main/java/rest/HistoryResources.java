@@ -1,6 +1,7 @@
 package rest;
 
 import domain.model.History;
+import domain.model.Person;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -8,8 +9,15 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
+
+import rest.dto.HistoryDto;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,36 +28,19 @@ import java.util.List;
 @Stateless
 public class HistoryResources {
 
+	Mapper mapper = new DozerBeanMapper();
     @PersistenceContext
     EntityManager entityManager;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get() throws ParseException {
-
-       
-        return Response.ok().build();
-
+    public List<HistoryDto> getAll(){
+    	List<HistoryDto> result = new ArrayList<HistoryDto>();
+        System.out.println("zaczynam pobierac dane");
+    	for(History h: entityManager.createNamedQuery("history.all",History.class).getResultList()){
+        	result.add(mapper.map(h, HistoryDto.class));
+        }
+        System.out.println("koncze");
+        return result;
     }
-//
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Response getFromAndTo(@PathParam("id") int id, @QueryParam("dateFrom") String timeFrom
-//            , @QueryParam("dateTo") String timeTo) throws ParseException {
-//
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Date dateObj = sdf.parse(timeFrom);
-//        Date dateObj2 = sdf.parse(timeTo);
-//
-//        List<History> result = entityManager.createNamedQuery("dateBetween", History.class)
-//                .setParameter("walletFrom.id", id)
-//                .setParameter("dateFrom", dateObj)
-//                .setParameter("dateTo", dateObj2)
-//                .getResultList();
-//
-//        if (result == null) {
-//            return Response.status(404).build();
-//        }
-//        return Response.ok(result).build();
-//    }
 }
