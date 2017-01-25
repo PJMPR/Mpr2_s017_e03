@@ -49,7 +49,7 @@ public class DbServlet extends HttpServlet {
 				log.setRate(1.0);
 				log.setFrom(wallet);
 				log.setTo(wallet);
-				//catalog.WallettHistory().add(log);
+				catalog.WallettHistory().add(log);
 			}
 			catalog.saveAndClose();
 			session.removeAttribute("person");

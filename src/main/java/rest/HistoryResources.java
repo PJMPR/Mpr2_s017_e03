@@ -18,7 +18,7 @@ import rest.dto.HistoryDto;
 import java.util.ArrayList;
 import java.util.List;
 
-@Path("wallet/{id}/history")
+@Path("history")
 @Stateless
 public class HistoryResources {
 
