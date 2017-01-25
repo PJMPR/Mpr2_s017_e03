@@ -14,13 +14,6 @@ import java.sql.Date;
  */
 @XmlRootElement
 @Entity
-//@NamedQueries({
-//        @NamedQuery(name = "walletTo.id", query = "from History h where h.to.id =:to_id")
-        //@NamedQuery(name= "walletFrom.id", query = "from History h where h.from.id =:from_id")
-@NamedQueries({
-        @NamedQuery(name = "dateFrom", query = "Select h from History h where h.date =:dateFrom"),
-        @NamedQuery(name = "dateBetween", query = "SELECT h from History h where h.date between :dateFrom AND :dateTo")})
-//})
 public class History implements IHaveId {
 
     @Id
@@ -28,10 +21,9 @@ public class History implements IHaveId {
     private Integer id;
     private Date date;
     private Double amount;
-    @OneToOne
-    private Wallet From;
-    @OneToOne
-    private Wallet To;
+    @ManyToOne
+    private Wallet from;
+    private Wallet to;
     private Double rate;
 
     public void setId(Integer id) {
@@ -81,18 +73,18 @@ public class History implements IHaveId {
         return rate;
     }
 	public Wallet getFrom() {
-		return From;
+		return from;
 	}
 
 	public void setFrom(Wallet from) {
-		From = from;
+		this.from = from;
 	}
 
 	public Wallet getTo() {
-		return To;
+		return to;
 	}
 
 	public void setTo(Wallet to) {
-		To = to;
+		this.to = to;
 	}
 }

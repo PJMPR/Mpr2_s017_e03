@@ -1,6 +1,7 @@
 package domain.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -27,8 +29,20 @@ public class Wallet implements IHaveId{
 
     @ManyToOne
     private Person person;
+    @OneToMany(mappedBy="from")
+    private List<History> history;
+    
+    
+    
+    public List<History> getHistory() {
+		return history;
+	}
 
-    public int getId() {
+	public void setHistory(List<History> history) {
+		this.history = history;
+	}
+
+	public int getId() {
         return id;
     }
 

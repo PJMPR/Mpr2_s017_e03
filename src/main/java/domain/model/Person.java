@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement
 @Entity
 @Table(name="people")
 @NamedQueries({
